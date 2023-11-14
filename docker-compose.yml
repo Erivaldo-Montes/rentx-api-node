@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  database:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgres/data
+    environment:
+      - POSTGRES_PASSWORD=erivaldo
+      - POSTGRES_DB=rentxDB
+      - POSTGRES_USER=erivaldo
+volumes:
+  pgdata:

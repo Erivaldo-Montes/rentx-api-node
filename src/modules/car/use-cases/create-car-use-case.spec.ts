@@ -1,12 +1,12 @@
 import { InMemoryCarRepository } from '@car/repositories/in-memory/in-memory-car-repository'
-import { beforeEach, expect, it, test } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateCarUseCase } from './create-car-use-case'
 import { CarAlreadyExistError } from './errors/car-already-exist-error'
 
 let carsRepository: InMemoryCarRepository
 let createCarUseCase: CreateCarUseCase
 
-test('Car', () => {
+describe('Car', () => {
   beforeEach(() => {
     carsRepository = new InMemoryCarRepository()
     createCarUseCase = new CreateCarUseCase(carsRepository)

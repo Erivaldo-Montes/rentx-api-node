@@ -5,4 +5,5 @@ import { createCar } from './createCar'
 export async function carRoute (app: FastifyInstance): Promise<void> {
   app.post('/car', createCar)
   app.post('/specification/:carId', createCarSpecificationController)
+  app.post('/category', createCategoryController)
 }

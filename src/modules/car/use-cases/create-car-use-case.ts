@@ -1,6 +1,8 @@
-import { type ICarsRepository } from '@car/repositories/ICars-repository'
+import { ICarsRepository } from '@car/repositories/ICars-repository'
+import { ICategoriesRepository } from '@car/repositories/ICategories-repository'
 import { Car } from '@prisma/client'
 import { CarAlreadyExistError } from './errors/car-already-exist-error'
+import { CategoryNotExistError } from './errors/category-not-exist-error'
 
 interface IRequest {
   brand: string
@@ -12,7 +14,10 @@ interface IRequest {
 }
 
 export class CreateCarUseCase {
-  constructor(private carsRepository: ICarsRepository) {}
+  constructor(
+    private carsRepository: ICarsRepository,
+    private categoriesRepository: ICategoriesRepository
+  ) {}
 
   async execute({
     name,
@@ -22,11 +27,16 @@ export class CreateCarUseCase {
     daily_rate,
     license_plate,
   }: IRequest): Promise<Car> {
-    const carAlreadyExist =
-      await this.carsRepository.findByLicensePlate(license_plate)
+    const carAlreadyExist = await this.carsRepository.findByLicensePlate(license_plate)
 
     if (carAlreadyExist) {
       throw new CarAlreadyExistError()
+    }
+
+    const categoryAlreadyExist = await this.categoriesRepository.findById(category_id)
+
+    if(!categoryAlreadyExist) {
+      throw new CategoryNotExistError()
     }
 
     const car = await this.carsRepository.create({

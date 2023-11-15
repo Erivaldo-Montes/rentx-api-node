@@ -1,13 +1,13 @@
 import { InMemoryCarRepository } from '@car/repositories/in-memory/in-memory-car-repository'
 import { InMemorySpecificationRepository } from '@car/repositories/in-memory/in-memory-specifications-repository'
-import { beforeEach, expect, it, test } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateSpecificationUseCase } from './create-specification-use-case'
 
 let specificationRepository: InMemorySpecificationRepository
 let createSpecificationUseCase: CreateSpecificationUseCase
 let carsRepository: InMemoryCarRepository
 
-test('create specification use case', () => {
+describe('create specification use case', () => {
   beforeEach(() => {
     specificationRepository = new InMemorySpecificationRepository()
     carsRepository = new InMemoryCarRepository()

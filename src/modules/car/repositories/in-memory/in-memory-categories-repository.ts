@@ -30,4 +30,14 @@ import { randomUUID } from 'crypto'
     return category
   }
 
+  async findById(id: string): Promise<Category | null> {
+    const category = this.categories.find(item => item.id === id)
+
+    if(!category){
+      return null
+    }
+
+    return category
+  }
+
 }

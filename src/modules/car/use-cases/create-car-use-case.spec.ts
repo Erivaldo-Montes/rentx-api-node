@@ -26,25 +26,24 @@ describe('Car', () => {
   })
 
   it("should not be able create two cars with same license plate", async () => {
-    await carsRepository.create({
-      name: 'car 1',
+    await createCarUseCase.execute({
+      name: 'car',
       brand: 'brand',
-      category_id: '123',
-      daily_rate: 123.12,
+      category_id: '12asd32',
+      daily_rate: 124,
       license_plate: '123d',
       about: '',
     })
 
-    const response = await createCarUseCase.execute({
-      name: 'car 2',
-      brand: 'brand 2',
-      category_id: '1232',
-      daily_rate: 1241,
-      license_plate: '123d',
-      about: 'asdas',
-    })
-
-    expect(response).rejects.toBeInstanceOf(CarAlreadyExistError)
-
+    await expect(() => {
+     return createCarUseCase.execute({
+        name: 'car 2',
+        brand: 'brand 2',
+        category_id: '1232',
+        daily_rate: 1241,
+        license_plate: '123d',
+        about: 'asdas',
+      })
+    }).rejects.toBeInstanceOf(CarAlreadyExistError)
   })
 })

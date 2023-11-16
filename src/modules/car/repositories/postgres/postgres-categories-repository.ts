@@ -17,7 +17,7 @@ export class PostgresCategoriesRepository implements ICategoriesRepository {
   }
 
   async findByName(name: string): Promise<Category| null> {
-    const category = await prisma.category.findFirst({
+    return  await prisma.category.findFirst({
       where: {
         name
       }

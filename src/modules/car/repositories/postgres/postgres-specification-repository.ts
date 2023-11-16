@@ -24,20 +24,15 @@ export class PostgresSpecificationsRepository implements ISpecificationsReposito
         name
       }
     })
+
   }
 
   async findByCar(car_id: string, name: string): Promise<Specification | null> {
-    const specification = await prisma.specification.findFirst({
+    return await prisma.specification.findFirst({
       where: {
         car_id,
         name
       },
     })
-
-    if(!specification){
-      return null
-    }
-
-    return specification
   }
 }

@@ -34,5 +34,14 @@ model Specification {
   car    Car    @relation(fields: [car_id], references: [id])
   car_id String
 
-  @@map("specification")
+  @@map("specifications")
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  created_at  DateTime @default(now())
+
+  @@map("categories")
 }

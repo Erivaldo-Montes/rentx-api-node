@@ -41,4 +41,9 @@ export class InMemoryCarRepository implements ICarsRepository {
     return car
 
   }
+
+  async delete(car_id: string): Promise<void> {
+    const carsWithoutSelected = this.cars.filter(item  => item.id !== car_id)
+    this.cars = carsWithoutSelected
+  }
 }

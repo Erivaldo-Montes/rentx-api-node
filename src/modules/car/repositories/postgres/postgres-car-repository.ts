@@ -45,11 +45,19 @@ export class PostgresCarsRepository implements ICarsRepository {
         id
       },    
     })
+  }
 
-    if(!car){
-      return null
-    }
+  async delete(id: string): Promise<void> {
+    await prisma.specification.deleteMany({
+      where: {
+        car_id: id
+      }
+    })
 
-    return car
+    await prisma.car.delete({
+      where: {
+        id
+      }
+    })
   }
 }

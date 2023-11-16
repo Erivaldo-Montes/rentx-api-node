@@ -26,21 +26,15 @@ export class PostgresCarsRepository implements ICarsRepository {
   }
 
   async findByLicensePlate(license_plate: string): Promise<Car | null> {
-    const car = await prisma.car.findFirst({
+    return await prisma.car.findFirst({
       where: {
         license_plate
       }
     })
-
-    if(!car){
-      return null
-    }
-
-    return car
   }
 
   async findById(id: string): Promise<Car | null> {
-    const car = await prisma.car.findUnique({
+    return await prisma.car.findFirst({
       where: {
         id
       },    

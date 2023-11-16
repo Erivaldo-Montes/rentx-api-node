@@ -23,11 +23,15 @@ export class PostgresCategoriesRepository implements ICategoriesRepository {
       }
     })
 
-    if(!category){
-      return null
-    }
+   
+  }
 
-    return category
+  async findById(id: string): Promise<Category | null> {
+    return  await prisma.category.findFirst({
+      where: {
+        id
+      }
+    })
   }
   
 }

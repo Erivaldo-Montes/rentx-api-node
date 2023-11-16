@@ -16,6 +16,7 @@ app.setErrorHandler((error, request, reply) => {
       .status(400)
       .send({ message: 'validation error', issue: error.format() })
   }if(error instanceof Error){
+    console.error(error)
     return reply.status(400).send({message: error.message})
   }else {
     return reply.status(500).send({ message: 'internal server error' })

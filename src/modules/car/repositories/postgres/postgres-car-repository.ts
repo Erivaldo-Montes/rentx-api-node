@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { Car, Prisma } from '@prisma/client'
+import { UpdateCarDTO } from '../../DTOs/update-car-dto'
 import type { ICarsRepository } from '../ICars-repository'
 
 export class PostgresCarsRepository implements ICarsRepository {
@@ -38,6 +39,21 @@ export class PostgresCarsRepository implements ICarsRepository {
       where: {
         id
       },    
+    })
+  }
+
+  async update({id, name, brand, about, daily_rate, category_id}: UpdateCarDTO): Promise<Car> {
+    return await prisma.car.update({
+      where: {
+        id
+      },
+      data: {
+        name,
+        brand,
+        about,
+        daily_rate,
+        category_id
+      }
     })
   }
 

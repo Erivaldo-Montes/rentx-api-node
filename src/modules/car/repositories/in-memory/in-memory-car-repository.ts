@@ -1,5 +1,6 @@
 import { Car, Prisma } from '@prisma/client'
 import { randomUUID } from 'crypto'
+import { UpdateCarDTO } from '../../DTOs/update-car-dto'
 import { ICarsRepository } from '../ICars-repository'
 
 export class InMemoryCarRepository implements ICarsRepository {
@@ -40,6 +41,25 @@ export class InMemoryCarRepository implements ICarsRepository {
 
     return car
 
+  }
+
+  async update({id, name, about, brand, category_id, daily_rate}: UpdateCarDTO): Promise<Car> {
+    this.cars.forEach(item => {
+      if(item.id === id){
+        item.name = name,
+        item.about = about,
+        item.brand = brand,
+        item.category_id =  category_id,
+        item.daily_rate = daily_rate
+
+      }
+    })
+
+    return this.cars[this.cars.findIndex((element) => {
+      if(element.id === id){
+        return element
+      }
+    })]
   }
 
   async delete(car_id: string): Promise<void> {

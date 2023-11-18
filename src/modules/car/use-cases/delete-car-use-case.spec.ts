@@ -26,7 +26,7 @@ describe('delete car use case', () => {
 
     const carDeleted = await carsRepository.findById(car.id)
 
-    expect(carDeleted).toEqual(null)
+    expect(carDeleted).toBeNull()
   })
 
   it("Should not be able to delete a non exist car", async () => {

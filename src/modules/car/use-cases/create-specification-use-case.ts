@@ -25,7 +25,7 @@ export class CreateSpecificationUseCase {
 
     const specificationAlreadyExist = await this.specificationsRepository.findByCar(car.id, name)
 
-    if(specificationAlreadyExist?.name === name){
+    if(specificationAlreadyExist){
      throw new SpecificationAlreadyExistError()
     }
     

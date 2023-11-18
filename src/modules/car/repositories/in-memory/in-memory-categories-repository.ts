@@ -5,7 +5,7 @@ import { randomUUID } from 'crypto'
  export class InMemoryCategoriesRepository implements ICategoriesRepository {
   categories: Category[] = []
 
-  async create({name,  description}: Prisma.CategoryCreateInput) :Promise<void> {
+  async create({name,  description}: Prisma.CategoryCreateInput) :Promise<Category> {
     const category: Category ={
       id: randomUUID(),
       name,
@@ -14,6 +14,8 @@ import { randomUUID } from 'crypto'
     }
 
     this.categories.push(category)
+
+    return category
   }
 
   async list(): Promise<Category[]> {
@@ -38,6 +40,11 @@ import { randomUUID } from 'crypto'
     }
 
     return category
+  }
+
+  async delete(id: string): Promise<void> {
+    const categoriesWithoutCategoryDeleted = this.categories.filter(item => item.id !== id)
+    this.categories= categoriesWithoutCategoryDeleted
   }
 
 }

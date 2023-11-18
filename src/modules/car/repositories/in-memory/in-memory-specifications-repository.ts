@@ -1,5 +1,6 @@
 import { Prisma, Specification } from '@prisma/client';
 import { randomUUID } from 'crypto';
+import { UpdateSpecificationDTO } from '../../DTOs/update-specification-dto';
 import { ISpecificationsRepository } from '../ISpecifications-repository';
 
 export class InMemorySpecificationRepository implements ISpecificationsRepository {
@@ -17,7 +18,7 @@ export class InMemorySpecificationRepository implements ISpecificationsRepositor
     this.specifications.push(specification) 
   }
 
-  async update(id: string, name: string, description: string): Promise<void> {
+  async update({id, name, description}: UpdateSpecificationDTO): Promise<void> {
     this.specifications.forEach(item => {
       if(item.id === id){
         item.name = name
@@ -32,6 +33,16 @@ export class InMemorySpecificationRepository implements ISpecificationsRepositor
         return item
       }
     })
+
+    if(!specification){
+      return null
+    }
+
+    return specification
+  }
+
+  async findById(id: string): Promise<Specification | null> {
+    const specification = this.specifications.find(item => item.id === id)
 
     if(!specification){
       return null

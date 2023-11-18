@@ -1,6 +1,7 @@
 import { ICarsRepository } from '@car/repositories/ICars-repository'
 import { type ISpecificationsRepository } from '@car/repositories/ISpecifications-repository'
 import { CarNotExistError } from './errors/car-not-exist-error'
+import { SpecificationAlreadyExistError } from './errors/specification-already-exist-error'
 
 interface IRequest {
   car_id: string
@@ -25,8 +26,7 @@ export class CreateSpecificationUseCase {
     const specificationAlreadyExist = await this.specificationsRepository.findByCar(car.id, name)
 
     if(specificationAlreadyExist?.name === name){
-      await this.specificationsRepository.update(specificationAlreadyExist.id, name, description)
-      return
+     throw new SpecificationAlreadyExistError()
     }
     
     await this.specificationsRepository.create({name, description, car_id})

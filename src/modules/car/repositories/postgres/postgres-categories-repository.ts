@@ -3,8 +3,8 @@ import { Category, Prisma } from '@prisma/client'
 import { ICategoriesRepository } from '../ICategories-repository'
 
 export class PostgresCategoriesRepository implements ICategoriesRepository {
-  async create({ name, description }: Prisma.CategoryCreateInput): Promise<void> {
-    await prisma.category.create({
+  async create({ name, description }: Prisma.CategoryCreateInput): Promise<Category> {
+    return await prisma.category.create({
       data: {
         name,
         description
@@ -13,7 +13,9 @@ export class PostgresCategoriesRepository implements ICategoriesRepository {
   }
 
   async list(): Promise<Category[]> {
-    return await prisma.category.findMany()
+    return await prisma.$queryRaw`
+      SELECT * FROM categories
+    `
   }
 
   async findByName(name: string): Promise<Category| null> {
@@ -28,6 +30,14 @@ export class PostgresCategoriesRepository implements ICategoriesRepository {
 
   async findById(id: string): Promise<Category | null> {
     return  await prisma.category.findFirst({
+      where: {
+        id
+      }
+    })
+  }
+
+  async delete(id: string): Promise<void> {
+    await prisma.category.delete({
       where: {
         id
       }

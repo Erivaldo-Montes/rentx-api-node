@@ -12,16 +12,16 @@ export async function UpdateCarController(request: FastifyRequest, reply: Fastif
   })
 
   const updateCarSchemaParams = z.object({
-    id: z.string()
+    carId: z.string()
   })
 
   const {name, brand, about, category_id, daily_rate} = updateCarSchemaBody.parse(request.body)
-  const {id} = updateCarSchemaParams.parse(request.params)
+  const {carId} = updateCarSchemaParams.parse(request.params)
 
   const updateCarUseCase = makeUpdateUseCase()
 
   const car = await updateCarUseCase.execute({
-    id,
+    id: carId,
     name,
     brand,
     about,

@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { Car, Prisma } from '@prisma/client'
+import { ListCarsDTO } from '../../DTOs/list-cars-dto'
 import { UpdateCarDTO } from '../../DTOs/update-car-dto'
 import type { ICarsRepository } from '../ICars-repository'
 
@@ -68,6 +69,15 @@ export class PostgresCarsRepository implements ICarsRepository {
       where: {
         id
       }
+    })
+  }
+
+  async list({page}: ListCarsDTO): Promise<Car[]> {
+    const itemByPage = 20
+    return await prisma.car.findMany({
+      where:{},
+      take: itemByPage,
+      skip: (page -1) * itemByPage
     })
   }
 }

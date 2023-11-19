@@ -1,5 +1,6 @@
 import { Car, Prisma } from '@prisma/client'
 import { randomUUID } from 'crypto'
+import { ListCarsDTO } from '../../DTOs/list-cars-dto'
 import { UpdateCarDTO } from '../../DTOs/update-car-dto'
 import { ICarsRepository } from '../ICars-repository'
 
@@ -65,5 +66,10 @@ export class InMemoryCarRepository implements ICarsRepository {
   async delete(car_id: string): Promise<void> {
     const carsWithoutSelected = this.cars.filter(item  => item.id !== car_id)
     this.cars = carsWithoutSelected
+  }
+
+  async list({page}: ListCarsDTO): Promise<Car[]> {
+    const itemsPerPage = 2
+    return this.cars.slice((page - 1) * itemsPerPage, itemsPerPage * page)
   }
 }

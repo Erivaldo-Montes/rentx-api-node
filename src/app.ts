@@ -1,5 +1,4 @@
-import Fastify from 'fastify'
-
+import { userRoute } from '@account/http/routes'
 import { carRoute } from '@car/http/routes'
 import swagger from '@fastify/swagger'
 import swaggerUI from '@fastify/swagger-ui'
@@ -30,6 +29,7 @@ app.register(swaggerUI, {
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 app.register(carRoute)
+app.register(userRoute)
 
 app.setErrorHandler((error, request, reply) => {
   if (error instanceof ZodError) {

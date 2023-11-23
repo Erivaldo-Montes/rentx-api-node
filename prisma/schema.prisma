@@ -45,3 +45,19 @@ model Category {
 
   @@map("categories")
 }
+
+model User {
+  id             String   @id @default(uuid())
+  name           String
+  email          String
+  password       String
+  role           Role     @default(USER)
+  driver_license String
+  avatar         String?
+  created_at     DateTime @default(now())
+}
+
+enum Role {
+  ADMIN
+  USER
+}

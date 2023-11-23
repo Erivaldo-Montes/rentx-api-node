@@ -43,3 +43,13 @@ app.setErrorHandler((error, request, reply) => {
     return reply.status(500).send({ message: 'internal server error' })
   }
 })
+
+
+
+
+
+
+
+
+
+

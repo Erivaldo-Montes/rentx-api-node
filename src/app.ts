@@ -1,10 +1,31 @@
 import Fastify from 'fastify'
 
 import { carRoute } from '@car/http/routes'
+import swagger from '@fastify/swagger'
+import swaggerUI from '@fastify/swagger-ui'
+import Fastify from 'fastify'
 import { ZodError } from 'zod'
 
 export const app = Fastify({
   logger: true
+})
+
+
+
+app.register(swagger, {
+  mode: 'static',
+  specification: {
+    path: './src/shared/documentation/swagger.json',
+    postProcessor: (swaggerObject) => {
+      return swaggerObject
+    },
+    baseDir: './src/shared/documentation/category.json',
+  },
+})
+
+app.register(swaggerUI, {
+  routePrefix: '/docs',
+  
 })
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises

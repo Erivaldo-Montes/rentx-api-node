@@ -8,13 +8,15 @@ import { listCarsController } from './list-car-controller'
 import { listCategoriesController } from './list-category-controller'
 import { UpdateCarController } from './update-car-controller'
 
+
+
 export async function carRoute (app: FastifyInstance): Promise<void> {
-  app.post('/specification/:carId', createCarSpecificationController)
-  app.post('/car', createCarController)
-  app.delete('/car/:carId',deleteCarController)
-  app.patch('/car/:carId', UpdateCarController)
-  app.post('/category', createCategoryController)
-  app.get('/category', listCategoriesController)
-  app.delete('/category/:id', deleteCategoryController)
   app.get('/car', listCarsController)
+  app.post('/car', createCarController)
+  app.patch('/car/:carId', UpdateCarController)
+  app.delete('/car/:carId',deleteCarController)
+  app.get('/category', listCategoriesController)
+  app.post('/category', createCategoryController)
+  app.delete('/category/:id', deleteCategoryController)
+  app.post('/specification/:carId', createCarSpecificationController)
 }

@@ -1,6 +1,6 @@
-import { makeListCarsUseCase } from '@car/use-cases/factories/make-list-cars-use-case';
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from 'zod';
+import { makeListCarsUseCase } from '../use-cases/factories/make-list-cars-use-case';
 
 export async function listCarsController (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply>{
   const listCarsSchemaQuery =  z.object({

@@ -4,14 +4,20 @@ import bcrypt from 'bcrypt'
 import { UserAlreadyExists } from './errors/user-already-exist-error'
 
 export class CreateUserUseCase {
-  constructor(private usersRepository: IUsersRepository){}
+  constructor(private usersRepository: IUsersRepository) {}
 
-  async execute({name, email, password, driver_license}: Prisma.UserCreateInput): Promise<Omit<User, 'password'| 'role'>>{
+  async execute({
+    name,
+    email,
+    password,
+    driver_license,
+  }: Prisma.UserCreateInput): Promise<Omit<User, 'password' | 'role'>> {
     const userByEmail = await this.usersRepository.findByEmail(email)
 
-    const userByDriverLicense = await this.usersRepository.findByDriverLicense(driver_license)
-    
-    if(userByEmail || userByDriverLicense){
+    const userByDriverLicense =
+      await this.usersRepository.findByDriverLicense(driver_license)
+
+    if (userByEmail || userByDriverLicense) {
       throw new UserAlreadyExists()
     }
 

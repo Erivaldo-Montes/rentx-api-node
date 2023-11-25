@@ -1,13 +1,11 @@
-import { beforeEach, describe, expect, it } from "vitest";
-import { InMemoryCarRepository } from "../repositories/in-memory/in-memory-car-repository";
-import { ListCarsUseCase } from "./list-cars-use-case";
-
+import { beforeEach, describe, expect, it } from 'vitest'
+import { InMemoryCarRepository } from '../repositories/in-memory/in-memory-car-repository'
+import { ListCarsUseCase } from './list-cars-use-case'
 
 let carsRepository: InMemoryCarRepository
 let listCarsUseCase: ListCarsUseCase
 
 describe('List car use case', () => {
-
   beforeEach(() => {
     carsRepository = new InMemoryCarRepository()
     listCarsUseCase = new ListCarsUseCase(carsRepository)
@@ -19,7 +17,7 @@ describe('List car use case', () => {
       brand: 'brand 1',
       about: '',
       category_id: '1',
-      daily_rate:122,
+      daily_rate: 122,
       license_plate: 'AGF-8874',
     })
     await carsRepository.create({
@@ -27,15 +25,18 @@ describe('List car use case', () => {
       brand: 'brand 2',
       about: '',
       category_id: '1',
-      daily_rate:122,
+      daily_rate: 122,
       license_plate: 'AGF-8234',
     })
-  
-    const cars = await listCarsUseCase.execute({page: 1})
+
+    const cars = await listCarsUseCase.execute({ page: 1 })
 
     console.log(cars)
-    
-    expect(cars).toEqual([expect.objectContaining({name: 'car 1'}), expect.objectContaining({name: 'car 2'})])
+
+    expect(cars).toEqual([
+      expect.objectContaining({ name: 'car 1' }),
+      expect.objectContaining({ name: 'car 2' }),
+    ])
   })
 
   it('Should be possible to list car by page', async () => {
@@ -44,7 +45,7 @@ describe('List car use case', () => {
       brand: 'brand 1',
       about: '',
       category_id: '1',
-      daily_rate:122,
+      daily_rate: 122,
       license_plate: 'AGF-8874',
     })
     await carsRepository.create({
@@ -52,7 +53,7 @@ describe('List car use case', () => {
       brand: 'brand 2',
       about: '',
       category_id: '1',
-      daily_rate:122,
+      daily_rate: 122,
       license_plate: 'AGF-8234',
     })
 
@@ -61,14 +62,14 @@ describe('List car use case', () => {
       brand: 'brand 3',
       about: '',
       category_id: '1',
-      daily_rate:122,
+      daily_rate: 122,
       license_plate: 'AGF-8822',
     })
 
-    const cars = await listCarsUseCase.execute({page: 2})
+    const cars = await listCarsUseCase.execute({ page: 2 })
 
     console.log(cars)
-    
-    expect(cars).toEqual([expect.objectContaining({name: 'car 3'})])
+
+    expect(cars).toEqual([expect.objectContaining({ name: 'car 3' })])
   })
 })

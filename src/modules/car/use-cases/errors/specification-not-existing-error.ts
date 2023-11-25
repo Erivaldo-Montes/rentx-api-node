@@ -1,5 +1,5 @@
 export class SpecificationNotExistingError extends Error {
-  constructor(){
+  constructor() {
     super('Specification not existing.')
   }
 }

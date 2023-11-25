@@ -19,28 +19,30 @@ describe('Car', () => {
   it('Should be able create a car', async () => {
     await categoryRepository.create({
       name: 'hatchback',
-      description: 'Um carro hatchback é um tipo de carroceria de automóvel que se caracteriza por ter uma área de carga integrada ao compartimento de passageiros, sem uma divisão rígida entre os dois.'
+      description:
+        'Um carro hatchback é um tipo de carroceria de automóvel que se caracteriza por ter uma área de carga integrada ao compartimento de passageiros, sem uma divisão rígida entre os dois.',
     })
 
     const category = await categoryRepository.findByName('hatchback')
 
     const response = await createCarUseCase.execute({
       name: 'Fiat Argo',
-      about: 'O Fiat Argo é um modelo de carro compacto produzido pela fabricante italiana Fiat. Ele foi projetado para ser um hatchback subcompacto e foi lançado no mercado para competir nesse segmento',
+      about:
+        'O Fiat Argo é um modelo de carro compacto produzido pela fabricante italiana Fiat. Ele foi projetado para ser um hatchback subcompacto e foi lançado no mercado para competir nesse segmento',
       brand: 'Fiat',
       category_id: category!.id,
       daily_rate: 123,
-      license_plate: '23123'
+      license_plate: '23123',
     })
 
     expect(response).toHaveProperty('id')
   })
 
-  it("should not be able create two cars with same license plate", async () => {
-
+  it('should not be able create two cars with same license plate', async () => {
     await categoryRepository.create({
       name: 'hatchback',
-      description: 'Um carro hatchback é um tipo de carroceria de automóvel que se caracteriza por ter uma área de carga integrada ao compartimento de passageiros, sem uma divisão rígida entre os dois.'
+      description:
+        'Um carro hatchback é um tipo de carroceria de automóvel que se caracteriza por ter uma área de carga integrada ao compartimento de passageiros, sem uma divisão rígida entre os dois.',
     })
 
     const category = await categoryRepository.findByName('hatchback')
@@ -51,24 +53,26 @@ describe('Car', () => {
       category_id: category!.id,
       daily_rate: 120,
       license_plate: '123d',
-      about: 'O Fiat Argo é um modelo de carro compacto produzido pela fabricante italiana Fiat. Ele foi projetado para ser um hatchback subcompacto e foi lançado no mercado para competir nesse segmento',
+      about:
+        'O Fiat Argo é um modelo de carro compacto produzido pela fabricante italiana Fiat. Ele foi projetado para ser um hatchback subcompacto e foi lançado no mercado para competir nesse segmento',
     })
 
     await expect(() => {
-     return createCarUseCase.execute({
+      return createCarUseCase.execute({
         name: 'Onix Plus',
         brand: 'Chevrolet',
         category_id: category!.id,
         daily_rate: 90,
         license_plate: '123d',
-        about: 'O Chevrolet Onix Plus é um sedã compacto produzido pela fabricante de automóveis norte-americana Chevrolet.',
+        about:
+          'O Chevrolet Onix Plus é um sedã compacto produzido pela fabricante de automóveis norte-americana Chevrolet.',
       })
     }).rejects.toBeInstanceOf(CarAlreadyExistError)
   })
 
-  it("should not be possible to create a car without a category.", async () => {
+  it('should not be possible to create a car without a category.', async () => {
     await expect(() => {
-      return  createCarUseCase.execute({
+      return createCarUseCase.execute({
         name: 'Fiat Argo',
         brand: 'Fiat',
         category_id: '',

@@ -1,5 +1,5 @@
 export class CategoryAlreadyExistError extends Error {
-  constructor(){
+  constructor() {
     super('Category already exist')
   }
 }

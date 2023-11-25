@@ -16,7 +16,7 @@ interface IRequest {
 export class CreateCarUseCase {
   constructor(
     private carsRepository: ICarsRepository,
-    private categoriesRepository: ICategoriesRepository
+    private categoriesRepository: ICategoriesRepository,
   ) {}
 
   async execute({
@@ -27,15 +27,17 @@ export class CreateCarUseCase {
     daily_rate,
     license_plate,
   }: IRequest): Promise<Car> {
-    const carAlreadyExist = await this.carsRepository.findByLicensePlate(license_plate)
+    const carAlreadyExist =
+      await this.carsRepository.findByLicensePlate(license_plate)
 
     if (carAlreadyExist) {
       throw new CarAlreadyExistError()
     }
 
-    const categoryAlreadyExist = await this.categoriesRepository.findById(category_id)
+    const categoryAlreadyExist =
+      await this.categoriesRepository.findById(category_id)
 
-    if(!categoryAlreadyExist) {
+    if (!categoryAlreadyExist) {
       throw new CategoryNotExistError()
     }
 

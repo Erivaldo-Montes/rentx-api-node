@@ -2,15 +2,18 @@ import { ICategoriesRepository } from '@car/repositories/ICategories-repository'
 import { Category, Prisma } from '@prisma/client'
 import { randomUUID } from 'crypto'
 
- export class InMemoryCategoriesRepository implements ICategoriesRepository {
+export class InMemoryCategoriesRepository implements ICategoriesRepository {
   categories: Category[] = []
 
-  async create({name,  description}: Prisma.CategoryCreateInput) :Promise<Category> {
-    const category: Category ={
+  async create({
+    name,
+    description,
+  }: Prisma.CategoryCreateInput): Promise<Category> {
+    const category: Category = {
       id: randomUUID(),
       name,
       description,
-      created_at: new Date()
+      created_at: new Date(),
     }
 
     this.categories.push(category)
@@ -23,9 +26,9 @@ import { randomUUID } from 'crypto'
   }
 
   async findByName(name: string): Promise<Category | null> {
-    const category = this.categories.find(item => item.name === name)
+    const category = this.categories.find((item) => item.name === name)
 
-    if(!category){
+    if (!category) {
       return null
     }
 
@@ -33,9 +36,9 @@ import { randomUUID } from 'crypto'
   }
 
   async findById(id: string): Promise<Category | null> {
-    const category = this.categories.find(item => item.id === id)
+    const category = this.categories.find((item) => item.id === id)
 
-    if(!category){
+    if (!category) {
       return null
     }
 
@@ -43,8 +46,9 @@ import { randomUUID } from 'crypto'
   }
 
   async delete(id: string): Promise<void> {
-    const categoriesWithoutCategoryDeleted = this.categories.filter(item => item.id !== id)
-    this.categories= categoriesWithoutCategoryDeleted
+    const categoriesWithoutCategoryDeleted = this.categories.filter(
+      (item) => item.id !== id,
+    )
+    this.categories = categoriesWithoutCategoryDeleted
   }
-
 }

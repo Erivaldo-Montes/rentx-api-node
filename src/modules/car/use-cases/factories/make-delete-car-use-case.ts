@@ -6,5 +6,4 @@ export function makeDeleteCarUseCase(): DeleteCarUseCase {
   const deleteCarUseCase = new DeleteCarUseCase(carsRepository)
 
   return deleteCarUseCase
-
 }

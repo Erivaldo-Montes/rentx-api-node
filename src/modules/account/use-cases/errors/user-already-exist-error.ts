@@ -1,7 +1,5 @@
-
 export class UserAlreadyExists extends Error {
-  constructor(){
+  constructor() {
     super('User already exist')
   }
 }
-

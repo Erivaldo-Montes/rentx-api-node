@@ -1,67 +1,65 @@
-import { InMemoryCarRepository } from "@car/repositories/in-memory/in-memory-car-repository";
-import { InMemorySpecificationRepository } from "@car/repositories/in-memory/in-memory-specifications-repository";
-import { beforeEach, describe, expect, it } from "vitest";
-import { CreateSpecificationUseCase } from "./create-specification-use-case";
-import { CarNotExistError } from './errors/car-not-exist-error';
+import { InMemoryCarRepository } from '@car/repositories/in-memory/in-memory-car-repository'
+import { InMemorySpecificationRepository } from '@car/repositories/in-memory/in-memory-specifications-repository'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { CreateSpecificationUseCase } from './create-specification-use-case'
+import { CarNotExistError } from './errors/car-not-exist-error'
 
-let specificationRepository: InMemorySpecificationRepository;
-let createSpecificationUseCase: CreateSpecificationUseCase;
-let carsRepository: InMemoryCarRepository;
+let specificationRepository: InMemorySpecificationRepository
+let createSpecificationUseCase: CreateSpecificationUseCase
+let carsRepository: InMemoryCarRepository
 
-describe("create specification use case", () => {
+describe('create specification use case', () => {
   beforeEach(() => {
-    specificationRepository = new InMemorySpecificationRepository();
-    carsRepository = new InMemoryCarRepository();
+    specificationRepository = new InMemorySpecificationRepository()
+    carsRepository = new InMemoryCarRepository()
     createSpecificationUseCase = new CreateSpecificationUseCase(
       specificationRepository,
-      carsRepository
-    );
-  });
+      carsRepository,
+    )
+  })
 
-  it("Should be able create a new specification", async () => {
+  it('Should be able create a new specification', async () => {
     const specification = {
-      name: "velocity",
-      description: "120 km/h",
-    };
+      name: 'velocity',
+      description: '120 km/h',
+    }
 
     const car = await carsRepository.create({
-      name: "HB20S 2024",
-      brand: " Hyundai ",
+      name: 'HB20S 2024',
+      brand: ' Hyundai ',
       daily_rate: 120.0,
-      category_id: "123",
-      license_plate: "1231",
-      about: "",
-    });
+      category_id: '123',
+      license_plate: '1231',
+      about: '',
+    })
 
     await createSpecificationUseCase.execute({
       name: specification.name,
       description: specification.description,
       car_id: car.id,
-    });
+    })
 
     const specificationResult = await specificationRepository.findByCar(
       car.id,
-      specification.name
-    );
+      specification.name,
+    )
 
-    expect(specificationResult?.car_id).toEqual(car.id);
-    expect(specificationResult).toHaveProperty("id");
-  });
+    expect(specificationResult?.car_id).toEqual(car.id)
+    expect(specificationResult).toHaveProperty('id')
+  })
 
-  it("Should not be possible to create a specification on a non-existing car", async () => {
+  it('Should not be possible to create a specification on a non-existing car', async () => {
     const specification = {
-      name: "velocity",
-      description: "120 km/h",
-    };
+      name: 'velocity',
+      description: '120 km/h',
+    }
 
-     
     await expect(() => {
       return createSpecificationUseCase.execute({
         name: specification.name,
         description: specification.description,
         car_id: 'non-existing car',
-      });
+      })
     }).rejects.toBeInstanceOf(CarNotExistError)
-
-  });
-});
+  })
+})

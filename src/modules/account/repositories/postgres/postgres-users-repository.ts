@@ -3,13 +3,18 @@ import { Prisma, User } from '@prisma/client'
 import { IUsersRepository } from '../IUsers-repository'
 
 export class PostgresUsersRepository implements IUsersRepository {
-  async create({name, email, driver_license,password}: Prisma.UserCreateInput): Promise<Omit<User,'password' | 'role'>> {
+  async create({
+    name,
+    email,
+    driver_license,
+    password,
+  }: Prisma.UserCreateInput): Promise<Omit<User, 'password' | 'role'>> {
     const userCreated = await prisma.user.create({
       data: {
         name,
         email,
         driver_license,
-        password
+        password,
       },
       select: {
         id: true,
@@ -18,8 +23,7 @@ export class PostgresUsersRepository implements IUsersRepository {
         driver_license: true,
         avatar: true,
         created_at: true,
-      }
-
+      },
     })
 
     return userCreated
@@ -28,15 +32,17 @@ export class PostgresUsersRepository implements IUsersRepository {
   async findByEmail(email: string): Promise<User | null> {
     return await prisma.user.findFirst({
       where: {
-        email
+        email,
       },
     })
   }
 
-  async findByDriverLicense(driver_license: string): Promise<Omit<User, 'password' | 'role'> | null> {
+  async findByDriverLicense(
+    driver_license: string,
+  ): Promise<Omit<User, 'password' | 'role'> | null> {
     return await prisma.user.findFirst({
       where: {
-        driver_license
+        driver_license,
       },
       select: {
         id: true,
@@ -45,7 +51,7 @@ export class PostgresUsersRepository implements IUsersRepository {
         driver_license: true,
         avatar: true,
         created_at: true,
-      }
+      },
     })
   }
 }

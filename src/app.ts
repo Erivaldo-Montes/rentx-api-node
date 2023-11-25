@@ -5,14 +5,14 @@ import swagger from '@fastify/swagger'
 import swaggerUI from '@fastify/swagger-ui'
 import Fastify from 'fastify'
 import { ZodError } from 'zod'
-import { jwtConfig } from './config/auth'
+import { env } from './config/env'
 
 export const app = Fastify({
-  logger: true
+  logger: true,
 })
 
 app.register(fastifyJwt, {
-  secret: jwtConfig.secret
+  secret: env.JWT_SECRET,
 })
 
 // swagger
@@ -29,7 +29,6 @@ app.register(swagger, {
 
 app.register(swaggerUI, {
   routePrefix: '/docs',
-  
 })
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -43,20 +42,11 @@ app.setErrorHandler((error, request, reply) => {
     return reply
       .status(400)
       .send({ message: 'validation error', issue: error.format() })
-  }if(error instanceof Error){
+  }
+  if (error instanceof Error) {
     console.error(error)
-    return reply.status(400).send({message: error.message})
-  }else {
+    return reply.status(400).send({ message: error.message })
+  } else {
     return reply.status(500).send({ message: 'internal server error' })
   }
 })
-
-
-
-
-
-
-
-
-
-

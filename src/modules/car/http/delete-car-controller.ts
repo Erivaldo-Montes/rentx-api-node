@@ -1,11 +1,13 @@
-import { makeDeleteCarUseCase } from '@car/use-cases/factories/make-delete-car-use-case';
-import { FastifyReply, FastifyRequest } from "fastify";
-import { z } from 'zod';
+import { makeDeleteCarUseCase } from '@car/use-cases/factories/make-delete-car-use-case'
+import { FastifyReply, FastifyRequest } from 'fastify'
+import { z } from 'zod'
 
-export async function deleteCarController(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-
+export async function deleteCarController(
+  request: FastifyRequest,
+  reply: FastifyReply,
+): Promise<FastifyReply> {
   const deleteCarSchemaParams = z.object({
-    carId: z.string()
+    carId: z.string(),
   })
 
   const { carId } = deleteCarSchemaParams.parse(request.params)
@@ -15,4 +17,4 @@ export async function deleteCarController(request: FastifyRequest, reply: Fastif
   await deleteCarUseCase.execute(carId)
 
   return reply.status(200).send()
-} 
+}

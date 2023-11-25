@@ -5,13 +5,13 @@ import { UpdateCarDTO } from '../../DTOs/update-car-dto'
 import type { ICarsRepository } from '../ICars-repository'
 
 export class PostgresCarsRepository implements ICarsRepository {
-  async create ({
+  async create({
     name,
     brand,
     about,
     daily_rate,
     license_plate,
-    category_id
+    category_id,
   }: Prisma.CarCreateInput): Promise<Car> {
     const car = await prisma.car.create({
       data: {
@@ -20,64 +20,71 @@ export class PostgresCarsRepository implements ICarsRepository {
         daily_rate,
         license_plate,
         about,
-        category_id
-      }
+        category_id,
+      },
     })
 
-   return car
+    return car
   }
 
   async findByLicensePlate(license_plate: string): Promise<Car | null> {
     return await prisma.car.findFirst({
       where: {
-        license_plate
-      }
+        license_plate,
+      },
     })
   }
 
   async findById(id: string): Promise<Car | null> {
     return await prisma.car.findFirst({
       where: {
-        id
-      },    
+        id,
+      },
     })
   }
 
-  async update({id, name, brand, about, daily_rate, category_id}: UpdateCarDTO): Promise<Car> {
+  async update({
+    id,
+    name,
+    brand,
+    about,
+    daily_rate,
+    category_id,
+  }: UpdateCarDTO): Promise<Car> {
     return await prisma.car.update({
       where: {
-        id
+        id,
       },
       data: {
         name,
         brand,
         about,
         daily_rate,
-        category_id
-      }
+        category_id,
+      },
     })
   }
 
   async delete(id: string): Promise<void> {
     await prisma.specification.deleteMany({
       where: {
-        car_id: id
-      }
+        car_id: id,
+      },
     })
 
     await prisma.car.delete({
       where: {
-        id
-      }
+        id,
+      },
     })
   }
 
-  async list({page}: ListCarsDTO): Promise<Car[]> {
+  async list({ page }: ListCarsDTO): Promise<Car[]> {
     const itemByPage = 20
     return await prisma.car.findMany({
-      where:{},
+      where: {},
       take: itemByPage,
-      skip: (page -1) * itemByPage
+      skip: (page - 1) * itemByPage,
     })
   }
 }

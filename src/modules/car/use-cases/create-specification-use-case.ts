@@ -10,25 +10,25 @@ interface IRequest {
 }
 
 export class CreateSpecificationUseCase {
-  constructor( 
+  constructor(
     private specificationsRepository: ISpecificationsRepository,
-    private carsRepository: ICarsRepository
-  ){}
+    private carsRepository: ICarsRepository,
+  ) {}
 
   async execute({ name, description, car_id }: IRequest): Promise<void> {
-     
-    const car = await  this.carsRepository.findById(car_id)
+    const car = await this.carsRepository.findById(car_id)
 
-    if(!car){
+    if (!car) {
       throw new CarNotExistError()
     }
 
-    const specificationAlreadyExist = await this.specificationsRepository.findByCar(car.id, name)
+    const specificationAlreadyExist =
+      await this.specificationsRepository.findByCar(car.id, name)
 
-    if(specificationAlreadyExist){
-     throw new SpecificationAlreadyExistError()
+    if (specificationAlreadyExist) {
+      throw new SpecificationAlreadyExistError()
     }
-    
-    await this.specificationsRepository.create({name, description, car_id})
+
+    await this.specificationsRepository.create({ name, description, car_id })
   }
 }

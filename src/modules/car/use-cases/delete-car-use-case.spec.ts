@@ -19,7 +19,7 @@ describe('delete car use case', () => {
       category_id: '123',
       daily_rate: 123,
       license_plate: '123',
-      about: `The Renault Kwid is a popular entry-level hatchback produced by the French automaker Renault. It was first introduced in India in 2015 and has since gained popularity in various markets. The Kwid is known for its compact size, stylish design, and affordable pricing, making it a competitive option in the budget-friendly car segment.`
+      about: `The Renault Kwid is a popular entry-level hatchback produced by the French automaker Renault. It was first introduced in India in 2015 and has since gained popularity in various markets. The Kwid is known for its compact size, stylish design, and affordable pricing, making it a competitive option in the budget-friendly car segment.`,
     })
 
     await deleteCarUseCase.execute(car.id)
@@ -29,7 +29,7 @@ describe('delete car use case', () => {
     expect(carDeleted).toBeNull()
   })
 
-  it("Should not be able to delete a non exist car", async () => {
+  it('Should not be able to delete a non exist car', async () => {
     await expect(() => {
       return deleteCarUseCase.execute('123')
     }).rejects.toBeInstanceOf(CarNotExistError)

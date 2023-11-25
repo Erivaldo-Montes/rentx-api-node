@@ -1,13 +1,13 @@
-import { ICategoriesRepository } from "../repositories/ICategories-repository";
-import { CategoryNotExistError } from './errors/category-not-exist-error';
+import { ICategoriesRepository } from '../repositories/ICategories-repository'
+import { CategoryNotExistError } from './errors/category-not-exist-error'
 
 export class DeleteCategoryUseCase {
-  constructor(private CategoriesRepository: ICategoriesRepository){}
+  constructor(private CategoriesRepository: ICategoriesRepository) {}
 
   async execute(id: string): Promise<void> {
     const category = await this.CategoriesRepository.findById(id)
 
-    if(!category){
+    if (!category) {
       throw new CategoryNotExistError()
     }
 

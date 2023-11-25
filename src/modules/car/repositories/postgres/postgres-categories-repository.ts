@@ -3,12 +3,15 @@ import { Category, Prisma } from '@prisma/client'
 import { ICategoriesRepository } from '../ICategories-repository'
 
 export class PostgresCategoriesRepository implements ICategoriesRepository {
-  async create({ name, description }: Prisma.CategoryCreateInput): Promise<Category> {
+  async create({
+    name,
+    description,
+  }: Prisma.CategoryCreateInput): Promise<Category> {
     return await prisma.category.create({
       data: {
         name,
-        description
-      }
+        description,
+      },
     })
   }
 
@@ -18,30 +21,27 @@ export class PostgresCategoriesRepository implements ICategoriesRepository {
     `
   }
 
-  async findByName(name: string): Promise<Category| null> {
-    return  await prisma.category.findFirst({
+  async findByName(name: string): Promise<Category | null> {
+    return await prisma.category.findFirst({
       where: {
-        name
-      }
+        name,
+      },
     })
-
-   
   }
 
   async findById(id: string): Promise<Category | null> {
-    return  await prisma.category.findFirst({
+    return await prisma.category.findFirst({
       where: {
-        id
-      }
+        id,
+      },
     })
   }
 
   async delete(id: string): Promise<void> {
     await prisma.category.delete({
       where: {
-        id
-      }
+        id,
+      },
     })
   }
-  
 }

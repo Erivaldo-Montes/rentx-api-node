@@ -1,0 +1,460 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "rentx routes documentation",
+    "version": "1.0.0",
+    "title": "rentx api",
+    "contact": {
+      "email": "erivaldomontez@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://0.0.0.0:3333/",
+      "description": "Localhost"
+    }
+  ],
+  "components":{
+    "schemas": {
+      "car":{
+        "properties":{
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "brand": {"type": "string"},
+          "about": {"type": "string"},
+          "daily_rate": {"type": "integer"},
+          "category_id": {"type": "string"},
+          "created_at": {"type": "string"}
+        }
+      },
+      "category": {
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "description": {"type": "string"},
+          "create_at": {"type": "string"}
+        }
+      },
+      "user": {
+        "properties":{
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "email": {"type": "string"},
+          "driver_license": {"type": "string"},
+          "avatar": {"type": "string"},
+          "created_at": {"type": "string"}
+        }
+      },
+      "errorResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "paths":{
+    "/car" : {
+      "post": {
+        "summary": "create a new car",
+        "tags": ["car"],
+        "requestBody":{
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema":{
+                "type": "object",
+                "properties": {
+                  "name": {"type": "string" },
+                  "brand": {"type": "string"},
+                  "about": {"type": "string"},
+                  "daily_rate":{"type": "integer"},
+                  "category_id": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201": {
+            "description": "car created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#components/schemas/car"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "type": "object",
+                  "properties":{
+                    "message": { "type": "string"}
+                  }
+                }
+
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "summary": "list car by page",
+        "tags": ["car"],
+        "parameters":[
+          {
+            "in": "query",
+            "name": "page",
+            "required": true,
+            "description": "page to be returned, each with 20 items",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],        
+        "responses": {
+          "200": {
+            "description": "return a list car", 
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#components/schemas/car"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/car/{carId}": {
+      "patch": {
+        "summary": "update car information",
+        "tags": ["car"],
+        "parameters": [
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "car id already created",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required":true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {"type": "string"},
+                  "brand": {"type": "string"},
+                  "about": {"type": "string"},
+                  "category_id": {"type": "string"},
+                  "daily_rate": {"type": "integer"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "return an updated car",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/car"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json":{
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }, 
+      "delete": {
+        "summary": "delete a car",
+        "tags": ["car"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "carId",
+            "required": true,
+            "description": "car id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "car deleted"
+          },
+          "400": {
+            "description": "bad request",
+            "content":{
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/category": {
+      "get": {
+        "summary": "list all categories",
+        "tags": ["category"],
+        "responses": {
+          "200": {
+            "description": "return a category list",
+            "content":{
+              "application/json":{
+                "type": "object",
+                "schema":{
+                  "$ref": "#components/schemas/category"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a category",
+        "tags": ["category"],
+        "requestBody":{
+          "required": true,
+          "content":{
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "properties": {
+                  "name": {"type": "string"},
+                  "description": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "category created"
+          },
+          "400":{
+            "description":"bad request",
+            "content":{
+              "application/json": {
+                "type":"object",
+                "schema": {
+                  "$ref": "#components/schemas/category"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/category/{id}": {
+      "delete": {
+        "summary": "to delete a category",
+        "tags": ["category"],
+        "parameters":[
+          {
+            "name": "id",
+            "in": "path",
+            "description": "category id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "category deleted"
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json":{
+                "type":"object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+      
+    },
+    "/specification/{carId}": {
+      "post": {
+        "summary": "add a specification on a car",
+        "tags": ["specification"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "carId",
+            "description": "car id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody":{
+          "required": true,
+          "content": {
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "properties": {
+                  "name": {"type": "string"},
+                  "description": {"type": "string"}
+                }
+              }
+            }
+          }
+        }, 
+        "responses": {
+          "201": {
+            "description": "created specification"
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "create a new user",
+        "tags": ["user"],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json":{
+              "type": "object",
+              "schema": {
+                "properties": {
+                  "name": {"type": "string"},
+                  "email": {"type": "string"},
+                  "password": {"type": "string"},
+                  "driver_license": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/user"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/session": {
+      "post": {
+        "summary": "authenticate a user",
+        "tags": ["authenticate"],
+        "requestBody": {
+          "required": true,
+          "content":{
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "properties": {
+                  "email": {"type": "string"},
+                  "password": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "user has been authenticated",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "properties": {
+                    "token": {"type": "string"},
+                    "refresh_token": {"type": "string"}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }    
+  }
+}

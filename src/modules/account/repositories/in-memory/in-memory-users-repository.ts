@@ -29,23 +29,14 @@ export class InMemoryUsersRepository implements IUsersRepository {
     }
   }
 
-
-
-  async findByEmail(email: string): Promise<Omit<User, 'password' | 'role'> | null>{
+  async findByEmail(email: string): Promise<User | null>{
     const user = this.users.find(item => item.email === email)
 
     if(!user){
       return null
     }
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      driver_license: user.driver_license,
-      created_at: user.created_at
-    }
+    return user
   }
 
   async findByDriverLicense(driver_license: string):  Promise<Omit<User, 'password' | 'role'> |null> {

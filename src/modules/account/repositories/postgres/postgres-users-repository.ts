@@ -25,19 +25,11 @@ export class PostgresUsersRepository implements IUsersRepository {
     return userCreated
   }
 
-  async findByEmail(email: string): Promise<Omit<User, 'password'| 'role'> | null> {
+  async findByEmail(email: string): Promise<User | null> {
     return await prisma.user.findFirst({
       where: {
         email
       },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        driver_license: true,
-        avatar: true,
-        created_at: true,
-      }
     })
   }
 

@@ -64,4 +64,21 @@ export class InMemoryUsersRepository implements IUsersRepository {
       created_at: user.created_at,
     }
   }
+
+  async findById(id: string): Promise<Omit<User, 'password' | 'role'> | null> {
+    const user = this.users.find((item) => item.id === id)
+
+    if (!user) {
+      return null
+    }
+
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar,
+      driver_license: user.driver_license,
+      created_at: user.created_at,
+    }
+  }
 }

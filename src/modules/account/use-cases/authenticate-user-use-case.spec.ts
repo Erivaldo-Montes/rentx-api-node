@@ -1,3 +1,4 @@
+import { InMemoryRefreshTokensRepository } from '@account/repositories/in-memory/in-memory-refresh-tokens-repository'
 import { InMemoryUsersRepository } from '@account/repositories/in-memory/in-memory-users-repository'
 import { Prisma } from '@prisma/client'
 import { beforeEach, describe, expect, it } from 'vitest'
@@ -8,12 +9,17 @@ import { AuthenticateError } from './errors/authenticate-error'
 let usersRepository: InMemoryUsersRepository
 let authenticateUserUseCase: AuthenticateUserUseCase
 let createUserUseCase: CreateUserUseCase
+let refreshTokenRepository: InMemoryRefreshTokensRepository
 
 describe('Authenticate use case', () => {
   beforeEach(() => {
+    refreshTokenRepository = new InMemoryRefreshTokensRepository()
     usersRepository = new InMemoryUsersRepository()
     createUserUseCase = new CreateUserUseCase(usersRepository)
-    authenticateUserUseCase = new AuthenticateUserUseCase(usersRepository)
+    authenticateUserUseCase = new AuthenticateUserUseCase(
+      usersRepository,
+      refreshTokenRepository,
+    )
   })
 
   it('Should be possible to authenticate user', async () => {
@@ -26,12 +32,13 @@ describe('Authenticate use case', () => {
 
     await createUserUseCase.execute(user)
 
-    const userAuthenticate = await authenticateUserUseCase.execute({
+    const userAuthenticated = await authenticateUserUseCase.execute({
       email: user.email,
       password: user.password,
     })
 
-    expect(userAuthenticate.id).toEqual(expect.any(String))
+    expect(userAuthenticated.user.id).toEqual(expect.any(String))
+    expect(userAuthenticated.refresh_token).toEqual(expect.any(String))
   })
 
   it('Should not be possible to authenticate user if the password is incorrect', async () => {

@@ -16,30 +16,30 @@ export async function carRoute(app: FastifyInstance): Promise<void> {
   app.get('/category', listCategoriesController)
 
   // admin routes
-  app.post('/car', { onError: [verifyRole('ADMIN')] }, createCarController)
+  app.post('/car', { onRequest: [verifyRole('ADMIN')] }, createCarController)
   app.patch(
     '/car/:carId',
-    { onError: [verifyRole('ADMIN')] },
+    { onRequest: [verifyRole('ADMIN')] },
     UpdateCarController,
   )
   app.delete(
     '/car/:carId',
-    { onError: [verifyRole('ADMIN')] },
+    { onRequest: [verifyRole('ADMIN')] },
     deleteCarController,
   )
   app.post(
     '/category',
-    { onError: [verifyRole('ADMIN')] },
+    { onRequest: [verifyRole('ADMIN')] },
     createCategoryController,
   )
   app.delete(
     '/category/:id',
-    { onError: [verifyRole('ADMIN')] },
+    { onRequest: [verifyRole('ADMIN')] },
     deleteCategoryController,
   )
   app.post(
     '/specification/:carId',
-    { onError: [verifyRole('ADMIN')] },
+    { onRequest: [verifyRole('ADMIN')] },
     createCarSpecificationController,
   )
 }

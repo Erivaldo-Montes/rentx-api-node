@@ -1,6 +1,7 @@
 import { InMemoryUsersRepository } from '@account/repositories/in-memory/in-memory-users-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateUserUseCase } from './create-user-use-case'
+import { DriverLicenseAlreadyInUse } from './errors/driver-license-already-in-use'
 import { UserAlreadyExists } from './errors/user-already-exist-error'
 
 let usersRepository: InMemoryUsersRepository
@@ -58,6 +59,6 @@ describe('create user use case', () => {
         driver_license: '123',
         password: 'password',
       })
-    }).rejects.toBeInstanceOf(UserAlreadyExists)
+    }).rejects.toBeInstanceOf(DriverLicenseAlreadyInUse)
   })
 })

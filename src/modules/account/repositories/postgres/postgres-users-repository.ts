@@ -14,6 +14,7 @@ export class PostgresUsersRepository implements IUsersRepository {
         name,
         email,
         driver_license,
+        role: 'ADMIN',
         password,
       },
       select: {
@@ -43,6 +44,22 @@ export class PostgresUsersRepository implements IUsersRepository {
     return await prisma.user.findFirst({
       where: {
         driver_license,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        driver_license: true,
+        avatar: true,
+        created_at: true,
+      },
+    })
+  }
+
+  async findById(id: string): Promise<Omit<User, 'password' | 'role'> | null> {
+    return await prisma.user.findFirst({
+      where: {
+        id,
       },
       select: {
         id: true,

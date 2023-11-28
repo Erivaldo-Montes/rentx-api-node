@@ -29,5 +29,5 @@ export async function createCarController(
     category_id,
   })
 
-  return await reply.send({ car })
+  return await reply.status(201).send(car)
 }

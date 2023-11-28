@@ -53,11 +53,11 @@ export class InMemoryCarRepository implements ICarsRepository {
   }: UpdateCarDTO): Promise<Car> {
     this.cars.forEach((item) => {
       if (item.id === id) {
-        ;(item.name = name),
-          (item.about = about),
-          (item.brand = brand),
-          (item.category_id = category_id),
-          (item.daily_rate = daily_rate)
+        item.name = name
+        item.about = about
+        item.brand = brand
+        item.category_id = category_id
+        item.daily_rate = daily_rate
       }
     })
 
@@ -66,6 +66,7 @@ export class InMemoryCarRepository implements ICarsRepository {
         if (element.id === id) {
           return element
         }
+        return null
       })
     ]
   }

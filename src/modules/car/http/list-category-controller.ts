@@ -9,5 +9,5 @@ export async function listCategoriesController(
 
   const categories = await listCategoriesUseCase.execute()
 
-  return reply.status(200).send(categories)
+  return reply.status(200).send({ categories })
 }

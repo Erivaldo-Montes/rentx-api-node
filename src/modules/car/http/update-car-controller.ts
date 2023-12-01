@@ -33,5 +33,5 @@ export async function UpdateCarController(
     daily_rate,
   })
 
-  return reply.status(200).send({ car })
+  return reply.status(200).send(car)
 }

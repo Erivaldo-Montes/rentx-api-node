@@ -3,7 +3,7 @@ import { verifyRole } from '@/shared/http/middleware/verify-user-role'
 import { FastifyInstance } from 'fastify'
 import { createCarController } from './create-car-controller'
 import { createCategoryController } from './create-category-controller'
-import { createCarSpecificationController } from './create-specification-controller'
+import { createSpecificationController } from './create-specification-controller'
 import { deleteCarController } from './delete-car-controller'
 import { deleteCategoryController } from './delete-category-controller'
 import { listCarsController } from './list-car-controller'
@@ -12,7 +12,7 @@ import { UpdateCarController } from './update-car-controller'
 
 export async function carRoute(app: FastifyInstance): Promise<void> {
   app.addHook('onRequest', ensureAuthenticate)
-  app.get('/car', listCarsController)
+  app.get('/car/list', listCarsController)
   app.get('/category', listCategoriesController)
 
   // admin routes
@@ -37,9 +37,9 @@ export async function carRoute(app: FastifyInstance): Promise<void> {
     { onRequest: [verifyRole('ADMIN')] },
     deleteCategoryController,
   )
-  app.post(
-    '/specification/:carId',
+  app.patch(
+    '/car/specification/:carId',
     { onRequest: [verifyRole('ADMIN')] },
-    createCarSpecificationController,
+    createSpecificationController,
   )
 }

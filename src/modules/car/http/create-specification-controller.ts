@@ -2,7 +2,7 @@ import { makeCreateSpecificationUseCase } from '@car/use-cases/factories/make-cr
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function createCarSpecificationController(
+export async function createSpecificationController(
   request: FastifyRequest,
   reply: FastifyReply,
 ): Promise<FastifyReply> {

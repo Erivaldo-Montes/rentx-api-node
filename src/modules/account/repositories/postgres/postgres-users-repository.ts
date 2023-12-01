@@ -14,7 +14,7 @@ export class PostgresUsersRepository implements IUsersRepository {
         name,
         email,
         driver_license,
-        role: 'ADMIN',
+        role: 'USER',
         password,
       },
       select: {

@@ -15,6 +15,13 @@
     }
   ],
   "components":{
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "car":{
         "properties":{
@@ -59,6 +66,9 @@
       "post": {
         "summary": "create a new car",
         "tags": ["car"],
+        "security": [
+          {"bearerAuth": ["admin"]}
+        ],
         "requestBody":{
           "required": true,
           "content": {
@@ -70,6 +80,7 @@
                   "brand": {"type": "string"},
                   "about": {"type": "string"},
                   "daily_rate":{"type": "integer"},
+                  "license_plate": {"type": "string"},
                   "category_id": {"type": "string"}
                 }
               }
@@ -103,10 +114,15 @@
             }
           }
         }
-      },
+      }
+    },
+    "/car/list": {
       "get":{
         "summary": "list car by page",
         "tags": ["car"],
+        "security": [
+          {"bearerAuth": ["user"]}
+        ],
         "parameters":[
           {
             "in": "query",
@@ -124,8 +140,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "$ref": "#components/schemas/car"
+                  "type": "object",
+                  "properties": {
+                    "cars": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#components/schemas/car"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -147,6 +170,9 @@
       "patch": {
         "summary": "update car information",
         "tags": ["car"],
+        "security": [
+          {"bearerAuth": ["admin"]}
+        ],
         "parameters": [
           {
             "name": "carId",
@@ -202,6 +228,9 @@
       "delete": {
         "summary": "delete a car",
         "tags": ["car"],
+        "security": [
+          {"bearerAuth": ["admin"]}
+        ],
         "parameters": [
           {
             "in": "path",
@@ -235,6 +264,9 @@
       "get": {
         "summary": "list all categories",
         "tags": ["category"],
+        "security": [
+          {"bearerAuth": []}
+        ],
         "responses": {
           "200": {
             "description": "return a category list",
@@ -242,7 +274,14 @@
               "application/json":{
                 "type": "object",
                 "schema":{
-                  "$ref": "#components/schemas/category"
+                  "properties": {
+                    "categories": {
+                      "type": "array",
+                      "items":{
+                        "$ref": "#components/schemas/category"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -252,6 +291,9 @@
       "post": {
         "summary": "create a category",
         "tags": ["category"],
+        "security": [
+          {"bearerAuth": []}
+        ],
         "requestBody":{
           "required": true,
           "content":{
@@ -288,6 +330,9 @@
       "delete": {
         "summary": "to delete a category",
         "tags": ["category"],
+        "security": [
+          {"bearerAuth": []}
+        ],
         "parameters":[
           {
             "name": "id",
@@ -317,10 +362,13 @@
       }
       
     },
-    "/specification/{carId}": {
-      "post": {
+    "/car/specification/{carId}": {
+      "patch": {
         "summary": "add a specification on a car",
         "tags": ["specification"],
+        "security": [
+          {"bearerAuth": []}
+        ],
         "parameters": [
           {
             "in": "path",

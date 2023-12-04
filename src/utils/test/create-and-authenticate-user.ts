@@ -5,6 +5,7 @@ import request from 'supertest'
 
 interface Response {
   token: string
+  refresh_token: string
 }
 
 export async function createAndAuthenticateUser(
@@ -28,5 +29,6 @@ export async function createAndAuthenticateUser(
 
   return {
     token: response.body.token,
+    refresh_token: response.body.refresh_token,
   }
 }

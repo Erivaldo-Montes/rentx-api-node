@@ -56,7 +56,7 @@ export class PostgresUsersRepository implements IUsersRepository {
     })
   }
 
-  async findById(id: string): Promise<Omit<User, 'password' | 'role'> | null> {
+  async findById(id: string): Promise<Omit<User, 'password'> | null> {
     return await prisma.user.findFirst({
       where: {
         id,
@@ -68,6 +68,7 @@ export class PostgresUsersRepository implements IUsersRepository {
         driver_license: true,
         avatar: true,
         created_at: true,
+        role: true,
       },
     })
   }

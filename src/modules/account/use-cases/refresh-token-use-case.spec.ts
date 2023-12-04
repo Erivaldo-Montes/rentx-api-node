@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto'
 import dayjs from 'dayjs'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { InMemoryUsersRepository } from '../repositories/in-memory/in-memory-users-repository'
-import { TokenIsInvalid } from './errors/refresh-token-invalid'
+import { TokenIsInvalidError } from './errors/refresh-token-invalid-error'
 import { RefreshTokenUseCase } from './refresh-token-use-case'
 
 let refreshTokensRepository: InMemoryRefreshTokensRepository
@@ -66,6 +66,12 @@ describe('Refresh token use case', () => {
 
     await expect(() => {
       return refreshTokenUseCase.execute(refreshToken.token)
-    }).rejects.toBeInstanceOf(TokenIsInvalid)
+    }).rejects.toBeInstanceOf(TokenIsInvalidError)
+  })
+
+  it('Should not be possible to update the token without refresh token', async () => {
+    await expect(() => {
+      return refreshTokenUseCase.execute('')
+    }).rejects.toBeInstanceOf(TokenIsInvalidError)
   })
 })

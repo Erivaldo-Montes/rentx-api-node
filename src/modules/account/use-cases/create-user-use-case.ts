@@ -1,7 +1,7 @@
 import { IUsersRepository } from '@account/repositories/IUsers-repository'
 import { Prisma, User } from '@prisma/client'
 import bcrypt from 'bcrypt'
-import { DriverLicenseAlreadyInUse } from './errors/driver-license-already-in-use'
+import { DriverLicenseAlreadyInUseError } from './errors/driver-license-already-in-use-error'
 import { UserAlreadyExists } from './errors/user-already-exist-error'
 
 export class CreateUserUseCase {
@@ -23,7 +23,7 @@ export class CreateUserUseCase {
     }
 
     if (userByDriverLicense) {
-      throw new DriverLicenseAlreadyInUse()
+      throw new DriverLicenseAlreadyInUseError()
     }
 
     const password_hash = await bcrypt.hash(password, 8)

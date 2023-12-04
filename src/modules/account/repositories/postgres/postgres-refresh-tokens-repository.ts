@@ -25,4 +25,12 @@ export class PostgresRefreshTokensRepository
       },
     })
   }
+
+  async findByToken(token: string): Promise<RefreshToken | null> {
+    return await prisma.refreshToken.findFirst({
+      where: {
+        token,
+      },
+    })
+  }
 }

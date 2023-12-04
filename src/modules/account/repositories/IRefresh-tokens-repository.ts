@@ -8,4 +8,5 @@ export interface IRefreshTokensRepository {
   }: Prisma.RefreshTokenUncheckedCreateInput): Promise<RefreshToken>
 
   delete(user_id: string): Promise<void>
+  findByToken(token: string): Promise<RefreshToken | null>
 }

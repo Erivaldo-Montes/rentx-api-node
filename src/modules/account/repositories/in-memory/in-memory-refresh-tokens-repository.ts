@@ -31,4 +31,14 @@ export class InMemoryRefreshTokensRepository
 
     this.refreshTokens = refreshTokenWithoutDeleted
   }
+
+  async findByToken(token: string): Promise<RefreshToken | null> {
+    const refreshToken = this.refreshTokens.find((item) => item.token === token)
+
+    if (!refreshToken) {
+      return null
+    }
+
+    return refreshToken
+  }
 }

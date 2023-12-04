@@ -14,5 +14,5 @@ export interface IUsersRepository {
     driver_license: string,
   ): Promise<Omit<User, 'password' | 'role'> | null>
 
-  findById(id: string): Promise<Omit<User, 'password' | 'role'> | null>
+  findById(id: string): Promise<Omit<User, 'password'> | null>
 }

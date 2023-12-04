@@ -503,6 +503,51 @@
           }
         }
       }
-    }    
+    },
+    "/refresh-token": {
+      "post": {
+        "summary": "get new token",
+        "tags": ["authenticate"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "refresh_token": {"type": "string"}
+                }
+              }
+
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "new token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "token": {"type": "string"}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
   }
 }

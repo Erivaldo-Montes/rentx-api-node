@@ -56,6 +56,7 @@ model User {
   avatar         String?
   created_at     DateTime       @default(now())
   RefreshToken   RefreshToken[]
+  Rental         Rental[]
 }
 
 enum Role {
@@ -71,4 +72,18 @@ model RefreshToken {
   user_id    String
 
   @@map("refresh_tokens")
+}
+
+model Rental {
+  id         String   @id @default(uuid())
+  car        User     @relation(fields: [car_id], references: [id])
+  car_id     String
+  user_id    String
+  start_date DateTime
+  end_date   DateTime
+  total      Int
+  created_at DateTime @default(now())
+  update_at  DateTime @default(now())
+
+  @@map("rentals")
 }

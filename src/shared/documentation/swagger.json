@@ -547,6 +547,38 @@
           }
         }
       }
+    },
+    "/me": {
+      "get": {
+        "summary": "get user profile",
+        "tags": ["user"],
+        "security": [
+          {"bearerAuth": ["user"]}
+        ],
+        "responses": {
+          "200": {
+            "description": "user profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/user"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
   }

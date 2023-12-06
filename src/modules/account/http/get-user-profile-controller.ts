@@ -7,8 +7,6 @@ export async function GetUserProfileController(
 ): Promise<FastifyReply> {
   const { sub } = request.user
 
-  console.log('controller -------------------', sub)
-
   const getUserProfileUseCase = makeGetUserProfileUseCase()
 
   const user = await getUserProfileUseCase.execute(sub)

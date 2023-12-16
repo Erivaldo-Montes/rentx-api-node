@@ -62,8 +62,8 @@ describe('create car rental', () => {
 
     const rent = await createCarRentalUseCase.execute({
       car_id: car.id,
-      start_date: dayjs().toDate(),
-      end_date: dayjs().add(7, 'days').toDate(),
+      start_date: String(dayjs().toDate()),
+      end_date: String(dayjs().add(7, 'days').toDate()),
       user_id: user.id,
     })
 
@@ -85,8 +85,8 @@ describe('create car rental', () => {
     await expect(() => {
       return createCarRentalUseCase.execute({
         car_id: 'non-existing',
-        start_date: dayjs().toDate(),
-        end_date: dayjs().add(7, 'days').toDate(),
+        start_date: String(dayjs().toDate()),
+        end_date: String(dayjs().add(7, 'days').toDate()),
         user_id: user.id,
       })
     }).rejects.toBeInstanceOf(CarNotExistError)
@@ -107,8 +107,8 @@ describe('create car rental', () => {
     await expect(() => {
       return createCarRentalUseCase.execute({
         car_id: car.id,
-        start_date: dayjs().toDate(),
-        end_date: dayjs().add(7, 'days').toDate(),
+        start_date: String(dayjs().toDate()),
+        end_date: String(dayjs().add(7, 'days').toDate()),
         user_id: 'non-existing',
       })
     }).rejects.toBeInstanceOf(UserNotExistError)
@@ -136,10 +136,82 @@ describe('create car rental', () => {
     await expect(() => {
       return createCarRentalUseCase.execute({
         car_id: car.id,
-        start_date: dayjs().toDate(),
-        end_date: dayjs().add(7, 'hours').toDate(),
+        start_date: String(dayjs().toDate()),
+        end_date: String(dayjs().add(7, 'hours').toDate()),
         user_id: user.id,
       })
     }).rejects.toBeInstanceOf(PeriodLessThan24HourError)
+  })
+
+  it('should not be possible to rent an unavailable car ', async () => {
+    const car = await carsRepository.create({
+      name: 'Onix',
+      brand: 'Chevrolet',
+      category_id: '123456789',
+      daily_rate: 123,
+      license_plate: 'HYF-3447',
+      about: '',
+    })
+
+    const updatedCar = await carsRepository.update({
+      id: car.id,
+      about: car.about ? car.about : '',
+      brand: car.brand,
+      category_id: car.category_id,
+      daily_rate: car.daily_rate,
+      name: car.name,
+      available: false,
+    })
+
+    console.log(updatedCar)
+
+    const user = await usersRepository.create({
+      name: 'Jhon',
+      email: 'jhon@email.com',
+      driver_license: '123456789',
+      password: '123',
+    })
+
+    await expect(() => {
+      return createCarRentalUseCase.execute({
+        car_id: car.id,
+        user_id: user.id,
+        end_date: String(dayjs().add(2, 'days').toDate()),
+        start_date: String(dayjs().toDate()),
+      })
+    }).rejects.toEqual(new Error('Car is unavailable'))
+  })
+
+  it('Should be possible to mark the rental car as unavailable.', async () => {
+    const car = await carsRepository.create({
+      name: 'Onix',
+      brand: 'Chevrolet',
+      category_id: '123456789',
+      daily_rate: 123,
+      license_plate: 'HYF-3447',
+      about: '',
+    })
+
+    const user = await usersRepository.create({
+      name: 'Jhon',
+      email: 'jhon@email.com',
+      driver_license: '123456789',
+      password: '123',
+    })
+
+    const rentalCar = await createCarRentalUseCase.execute({
+      car_id: car.id,
+      start_date: String(dayjs().toDate()),
+      end_date: String(dayjs().add(7, 'days').toDate()),
+      user_id: user.id,
+    })
+
+    const carRented = await carsRepository.findById(rentalCar.car_id)
+
+    console.log(carRented)
+    expect(carRented).toEqual(
+      expect.objectContaining({ id: expect.any(String) }),
+    )
+    expect(carRented).toEqual(expect.objectContaining({ available: false }))
   })
 })

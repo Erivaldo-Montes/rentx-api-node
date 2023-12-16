@@ -12,13 +12,14 @@ export class PostgresCarsRepository implements ICarsRepository {
     daily_rate,
     license_plate,
     category_id,
-  }: Prisma.CarCreateInput): Promise<Car> {
+  }: Omit<Prisma.CarCreateInput, 'available'>): Promise<Car> {
     const car = await prisma.car.create({
       data: {
         name,
         brand,
         daily_rate,
         license_plate,
+        available: true,
         about,
         category_id,
       },
@@ -50,6 +51,7 @@ export class PostgresCarsRepository implements ICarsRepository {
     about,
     daily_rate,
     category_id,
+    available,
   }: UpdateCarDTO): Promise<Car> {
     return await prisma.car.update({
       where: {
@@ -61,6 +63,7 @@ export class PostgresCarsRepository implements ICarsRepository {
         about,
         daily_rate,
         category_id,
+        available,
       },
     })
   }

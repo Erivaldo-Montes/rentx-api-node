@@ -7,7 +7,7 @@ import { ICarsRepository } from '../ICars-repository'
 export class InMemoryCarRepository implements ICarsRepository {
   cars: Car[] = []
 
-  async create(data: Prisma.CarCreateInput): Promise<Car> {
+  async create(data: Omit<Prisma.CarCreateInput, 'available'>): Promise<Car> {
     const car: Car = {
       id: data.id ?? randomUUID(),
       name: data.name,
@@ -15,6 +15,7 @@ export class InMemoryCarRepository implements ICarsRepository {
       brand: data.brand,
       category_id: data.category_id,
       created_at: new Date(),
+      available: true,
       daily_rate: data.daily_rate,
       license_plate: data.license_plate,
     }
@@ -50,6 +51,7 @@ export class InMemoryCarRepository implements ICarsRepository {
     brand,
     category_id,
     daily_rate,
+    available,
   }: UpdateCarDTO): Promise<Car> {
     this.cars.forEach((item) => {
       if (item.id === id) {
@@ -58,6 +60,7 @@ export class InMemoryCarRepository implements ICarsRepository {
         item.brand = brand
         item.category_id = category_id
         item.daily_rate = daily_rate
+        item.available = available
       }
     })
 

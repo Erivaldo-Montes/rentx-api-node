@@ -1,3 +1,4 @@
+import { rentRoute } from '@/modules/rental/http/routes'
 import { userRoute } from '@account/http/routes'
 import { carRoute } from '@car/http/routes'
 import fastifyJwt from '@fastify/jwt'
@@ -35,6 +36,7 @@ app.register(swaggerUI, {
 // routes
 app.register(carRoute)
 app.register(userRoute)
+app.register(rentRoute)
 
 // error handler
 app.setErrorHandler((error, request, reply) => {

@@ -13,6 +13,7 @@ export class UpdateCarUseCase {
     about,
     category_id,
     daily_rate,
+    available = true,
   }: UpdateCarDTO): Promise<Car> {
     const car = await this.carsRepository.findById(id)
 
@@ -27,6 +28,7 @@ export class UpdateCarUseCase {
       brand,
       category_id,
       daily_rate,
+      available,
     })
 
     return carUpdate

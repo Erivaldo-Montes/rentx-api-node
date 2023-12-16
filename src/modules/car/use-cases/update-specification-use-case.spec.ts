@@ -26,7 +26,6 @@ describe('Update specification use case', () => {
       'velocity',
     )
 
-    console.log(specification)
     await updateSpecificationUseCase.execute({
       id: specification!.id,
       name: 'speed',

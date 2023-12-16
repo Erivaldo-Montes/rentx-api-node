@@ -17,6 +17,7 @@ describe('List car use case', () => {
       brand: 'brand 1',
       about: '',
       category_id: '1',
+      available: true,
       daily_rate: 122,
       license_plate: 'AGF-8874',
     })
@@ -24,14 +25,13 @@ describe('List car use case', () => {
       name: 'car 2',
       brand: 'brand 2',
       about: '',
+      available: true,
       category_id: '1',
       daily_rate: 122,
       license_plate: 'AGF-8234',
     })
 
     const cars = await listCarsUseCase.execute({ page: 1 })
-
-    console.log(cars)
 
     expect(cars).toEqual([
       expect.objectContaining({ name: 'car 1' }),
@@ -45,6 +45,7 @@ describe('List car use case', () => {
       brand: 'brand 1',
       about: '',
       category_id: '1',
+      available: true,
       daily_rate: 122,
       license_plate: 'AGF-8874',
     })
@@ -53,6 +54,7 @@ describe('List car use case', () => {
       brand: 'brand 2',
       about: '',
       category_id: '1',
+      available: true,
       daily_rate: 122,
       license_plate: 'AGF-8234',
     })
@@ -62,6 +64,7 @@ describe('List car use case', () => {
       brand: 'brand 3',
       about: '',
       category_id: '1',
+      available: true,
       daily_rate: 122,
       license_plate: 'AGF-8822',
     })

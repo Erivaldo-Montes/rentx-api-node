@@ -3,7 +3,7 @@ import { ListCarsDTO } from '../DTOs/list-cars-dto'
 import { UpdateCarDTO } from '../DTOs/update-car-dto'
 
 export interface ICarsRepository {
-  create: (car: Prisma.CarCreateInput) => Promise<Car>
+  create: (car: Omit<Prisma.CarCreateInput, 'available'>) => Promise<Car>
   update: ({
     id,
     name,
@@ -11,6 +11,7 @@ export interface ICarsRepository {
     brand,
     daily_rate,
     category_id,
+    available = true,
   }: UpdateCarDTO) => Promise<Car>
   findByLicensePlate: (license_plate: string) => Promise<Car | null>
   findById(id: string): Promise<Car | null>

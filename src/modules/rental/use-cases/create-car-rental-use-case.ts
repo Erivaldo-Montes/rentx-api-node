@@ -33,20 +33,36 @@ export class CreateCarRentalUseCase {
       throw new CarNotExistError()
     }
 
+    console.log(car.available)
+    if (car.available === false) {
+      throw new Error('Car is unavailable')
+    }
+
     const PERIOD_RENTAL_IN_HOURS = dayjs(end_date).diff(start_date, 'hours')
 
-    console.log(PERIOD_RENTAL_IN_HOURS)
     if (PERIOD_RENTAL_IN_HOURS < 24) {
       throw new PeriodLessThan24HourError()
     }
 
+    // mark car as unavailable
+    await this.carsRepository.update({
+      name: car.name,
+      about: car.about ?? '',
+      available: false,
+      brand: car.brand,
+      category_id: car.category_id,
+      daily_rate: car.daily_rate,
+      id: car.id,
+    })
+
     const total_in_cents = (car.daily_rate * PERIOD_RENTAL_IN_HOURS) / 24
 
+    console.log(user_id)
     const rent = await this.rentalsRepository.create({
       car_id,
       user_id,
-      end_date,
-      start_date,
+      end_date: new Date(end_date),
+      start_date: new Date(start_date),
       total: total_in_cents,
     })
 

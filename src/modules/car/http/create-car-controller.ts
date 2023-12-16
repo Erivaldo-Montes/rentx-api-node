@@ -17,7 +17,6 @@ export async function createCarController(
   const { name, brand, about, daily_rate, category_id, license_plate } =
     createCarBodySchema.parse(request.body)
 
-  console.log(name, brand, about, daily_rate, category_id, license_plate)
   const createCarUseCase = makeCreateCarUseCase()
 
   const car = await createCarUseCase.execute({

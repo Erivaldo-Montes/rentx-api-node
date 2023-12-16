@@ -25,7 +25,6 @@ export class RefreshTokenUseCase {
 
     const currentDate = dayjs().unix()
 
-    console.log(currentDate)
     if (refreshToken.expires_in < currentDate) {
       throw new TokenIsInvalidError()
     }

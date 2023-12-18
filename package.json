@@ -12,7 +12,7 @@
     "test:install-prisma-environment": "npm link vitest-environment-prisma",
     "pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
     "test:coverage": "vitest run --coverage",
-    "dev": "tsx watch ./src/server.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn ./src/server.ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "lint": "eslint . --ext .ts"
   },
@@ -29,6 +29,7 @@
     "dotenv": "16.3.1",
     "fastify": "^4.24.3",
     "prisma": "^5.5.2",
+    "ts-node-dev": "2.0.0",
     "vite-tsconfig-paths": "^4.2.1",
     "zod": "^3.22.4"
   },

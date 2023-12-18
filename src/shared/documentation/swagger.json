@@ -52,6 +52,19 @@
           "created_at": {"type": "string"}
         }
       },
+      "rent": {
+        "properties": {
+          "id": {"type": "string"},
+          "car_id": {"type": "string"},
+          "user_id":{"type": "string"},
+          "start_date": {"type": "string"},
+          "end_date": {"type": "string"},
+          "total": {"type": "string","description": "in cents"},
+          "create_at": {"type": "string"},
+          "updated_at": {"type": "string"}
+
+        }
+      },
       "errorResponse": {
         "properties": {
           "message": {
@@ -571,6 +584,53 @@
             "content": {
               "application/json": {
                 "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rent": {
+      "post": {
+        "summary": "create a car rental",
+        "tags": ["rent"],
+        "security": [
+          {
+            "bearerAuth": ["user"]
+          }
+        ],
+        "requestBody":{
+          "content": {
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "properties": {
+                  "car_id": {"type": "string"},
+                  "end_date": {"type": "string"},
+                  "start_date": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201":{
+            "description": "created",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "$ref": "#components/schemas/rent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#components/schemas/errorResponse"
                 }

@@ -1,5 +1,6 @@
+import { UserWithoutPassword } from '@account/DTOs/user-without-password-dto'
 import { IUsersRepository } from '@account/repositories/IUsers-repository'
-import { Prisma, User } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import { DriverLicenseAlreadyInUseError } from './errors/driver-license-already-in-use-error'
 import { UserAlreadyExists } from './errors/user-already-exist-error'
@@ -12,7 +13,7 @@ export class CreateUserUseCase {
     email,
     password,
     driver_license,
-  }: Prisma.UserCreateInput): Promise<Omit<User, 'password' | 'role'>> {
+  }: Prisma.UserCreateInput): Promise<UserWithoutPassword> {
     const userByEmail = await this.usersRepository.findByEmail(email)
 
     const userByDriverLicense =
@@ -35,6 +36,14 @@ export class CreateUserUseCase {
       driver_license,
     })
 
-    return userCreated
+    return {
+      id: userCreated.id,
+      name: userCreated.name,
+      email: userCreated.email,
+      avatar: userCreated.avatar,
+      driver_license: userCreated.driver_license,
+      created_at: userCreated.created_at,
+      role: userCreated.role,
+    }
   }
 }

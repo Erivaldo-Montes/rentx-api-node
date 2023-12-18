@@ -1,3 +1,4 @@
+import { UpdatePasswordDTO } from '@account/DTOs/update-password-dto'
 import { Prisma, User } from '@prisma/client'
 import { randomUUID } from 'crypto'
 import { IUsersRepository } from '../IUsers-repository'
@@ -10,7 +11,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
     email,
     password,
     driver_license,
-  }: Prisma.UserCreateInput): Promise<Omit<User, 'password' | 'role'>> {
+  }: Prisma.UserCreateInput): Promise<User> {
     const user: User = {
       id: randomUUID(),
       name,
@@ -24,14 +25,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
 
     this.users.push(user)
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      driver_license: user.driver_license,
-      created_at: user.created_at,
-    }
+    return user
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -44,9 +38,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
     return user
   }
 
-  async findByDriverLicense(
-    driver_license: string,
-  ): Promise<Omit<User, 'password' | 'role'> | null> {
+  async findByDriverLicense(driver_license: string): Promise<User | null> {
     const user = this.users.find(
       (item) => item.driver_license === driver_license,
     )
@@ -55,31 +47,27 @@ export class InMemoryUsersRepository implements IUsersRepository {
       return null
     }
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      driver_license: user.driver_license,
-      created_at: user.created_at,
-    }
+    return user
   }
 
-  async findById(id: string): Promise<Omit<User, 'password'> | null> {
+  async findById(id: string): Promise<User | null> {
     const user = this.users.find((item) => item.id === id)
 
     if (!user) {
       return null
     }
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      driver_license: user.driver_license,
-      role: user.role,
-      created_at: user.created_at,
-    }
+    return user
+  }
+
+  async updatePassword({
+    newPassword,
+    user_id,
+  }: UpdatePasswordDTO): Promise<void> {
+    this.users.forEach((item) => {
+      if (item.id === user_id) {
+        item.password = newPassword
+      }
+    })
   }
 }

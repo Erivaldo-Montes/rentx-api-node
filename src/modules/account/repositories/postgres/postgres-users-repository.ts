@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { Prisma, User } from '@prisma/client'
+import { UpdatePasswordDTO } from '../../DTOs/update-password-dto'
 import { IUsersRepository } from '../IUsers-repository'
 
 export class PostgresUsersRepository implements IUsersRepository {
@@ -8,7 +9,7 @@ export class PostgresUsersRepository implements IUsersRepository {
     email,
     driver_license,
     password,
-  }: Prisma.UserCreateInput): Promise<Omit<User, 'password' | 'role'>> {
+  }: Prisma.UserCreateInput): Promise<User> {
     const userCreated = await prisma.user.create({
       data: {
         name,
@@ -16,14 +17,6 @@ export class PostgresUsersRepository implements IUsersRepository {
         driver_license,
         role: 'USER',
         password,
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        driver_license: true,
-        avatar: true,
-        created_at: true,
       },
     })
 
@@ -38,37 +31,32 @@ export class PostgresUsersRepository implements IUsersRepository {
     })
   }
 
-  async findByDriverLicense(
-    driver_license: string,
-  ): Promise<Omit<User, 'password' | 'role'> | null> {
+  async findByDriverLicense(driver_license: string): Promise<User | null> {
     return await prisma.user.findFirst({
       where: {
         driver_license,
       },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        driver_license: true,
-        avatar: true,
-        created_at: true,
-      },
     })
   }
 
-  async findById(id: string): Promise<Omit<User, 'password'> | null> {
+  async findById(id: string): Promise<User | null> {
     return await prisma.user.findFirst({
       where: {
         id,
       },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        driver_license: true,
-        avatar: true,
-        created_at: true,
-        role: true,
+    })
+  }
+
+  async updatePassword({
+    newPassword,
+    user_id,
+  }: UpdatePasswordDTO): Promise<void> {
+    await prisma.user.update({
+      where: {
+        id: user_id,
+      },
+      data: {
+        password: newPassword,
       },
     })
   }

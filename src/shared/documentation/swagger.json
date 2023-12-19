@@ -495,7 +495,7 @@
         },
         "responses": {
           "200": {
-            "description": "password is updated"
+            "description": "password is updated."
           },
           "400": {
             "description": "bad request",

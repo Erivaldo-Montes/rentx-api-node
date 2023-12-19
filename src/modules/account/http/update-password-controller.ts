@@ -2,7 +2,7 @@ import { makeUpdatePasswordUseCase } from '@account/use-cases/factories/make-upd
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function UpdatePasswordController(
+export async function updatePasswordController(
   request: FastifyRequest,
   reply: FastifyReply,
 ): Promise<FastifyReply> {

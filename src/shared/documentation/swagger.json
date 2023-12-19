@@ -470,6 +470,47 @@
         }
       }
     },
+    "/user/update-password": {
+      "post": {
+        "tags": ["user"],
+        "summary": "update user password",
+        "security": [
+          {
+            "bearerAuth": ["user"]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "properties": {
+                  "currentPassword": {"type": "string"},
+                  "newPassword": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "password is updated"
+          },
+          "400": {
+            "description": "bad request",
+            "content":{
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref":  "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/session": {
       "post": {
         "summary": "authenticate a user",

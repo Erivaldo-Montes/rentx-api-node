@@ -24,6 +24,7 @@ describe('Delete car', () => {
         daily_rate: 120,
         license_plate: 'ADN-8773',
         category_id: 'asdasd',
+        available: true,
       },
     })
 

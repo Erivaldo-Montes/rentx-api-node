@@ -31,6 +31,7 @@ describe('Create specification', () => {
         category_id: category.id,
         daily_rate: 120,
         license_plate: 'RTY-3442',
+        available: true,
       },
     })
 

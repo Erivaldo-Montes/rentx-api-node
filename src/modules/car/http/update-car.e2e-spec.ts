@@ -24,6 +24,7 @@ describe('Update car informations', () => {
         category_id: '123',
         daily_rate: 123,
         license_plate: 'ERT-2334',
+        available: true,
       },
     })
 

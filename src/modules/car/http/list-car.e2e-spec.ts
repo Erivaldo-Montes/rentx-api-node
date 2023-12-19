@@ -24,6 +24,7 @@ describe('list car', () => {
         category_id: 'category id',
         daily_rate: 122,
         license_plate: 'ABC_1234',
+        available: true,
       },
     })
 
@@ -35,6 +36,7 @@ describe('list car', () => {
         category_id: 'category id',
         daily_rate: 122,
         license_plate: 'ABC_1234',
+        available: true,
       },
     })
 

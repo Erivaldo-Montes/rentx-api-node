@@ -1,4 +1,5 @@
 import { rentRoute } from '@/modules/rental/http/routes'
+import '@/shared/documentation/swagger.json'
 import { userRoute } from '@account/http/routes'
 import { carRoute } from '@car/http/routes'
 import fastifyJwt from '@fastify/jwt'

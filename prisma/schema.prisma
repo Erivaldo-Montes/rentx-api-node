@@ -59,6 +59,8 @@ model User {
   created_at     DateTime       @default(now())
   RefreshToken   RefreshToken[]
   Rental         Rental[]
+
+  @@map("users")
 }
 
 enum Role {

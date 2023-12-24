@@ -8,4 +8,6 @@ export interface IRentalsRepository {
     total,
     car_id,
   }: Prisma.RentalUncheckedCreateInput): Promise<Rental>
+
+  findById(id: string): Promise<Rental | null>
 }

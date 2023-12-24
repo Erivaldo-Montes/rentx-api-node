@@ -38,4 +38,14 @@ export class InMemoryRentalsRepository implements IRentalsRepository {
 
     return rent
   }
+
+  async findById(id: string): Promise<Rental | null> {
+    const rent = this.rentals.find((item) => item.id === id)
+
+    if (!rent) {
+      return null
+    }
+
+    return rent
+  }
 }

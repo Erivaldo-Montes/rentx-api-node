@@ -679,8 +679,44 @@
             }
           }
         }
+      },
+      "patch": {
+        "summary": "return a car",
+        "tags": ["rent"],
+        "security": [
+          {
+            "bearerAuth": ["user"]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "properties": {
+                  "rent_id": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "rent finished"
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
       }
     }
-
+  
   }
 }

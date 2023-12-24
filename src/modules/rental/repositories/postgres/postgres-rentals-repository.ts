@@ -21,4 +21,12 @@ export class PostgresRentalsRepository implements IRentalsRepository {
       },
     })
   }
+
+  async findById(id: string): Promise<Rental | null> {
+    return await prisma.rental.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
 }

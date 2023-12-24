@@ -10,4 +10,5 @@ export interface IRentalsRepository {
   }: Prisma.RentalUncheckedCreateInput): Promise<Rental>
 
   findById(id: string): Promise<Rental | null>
+  findAllRentalsByUser(user_id: string): Promise<Rental[]>
 }

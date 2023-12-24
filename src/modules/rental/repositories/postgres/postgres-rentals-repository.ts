@@ -29,4 +29,12 @@ export class PostgresRentalsRepository implements IRentalsRepository {
       },
     })
   }
+
+  async findAllRentalsByUser(user_id: string): Promise<Rental[]> {
+    return await prisma.rental.findMany({
+      where: {
+        user_id,
+      },
+    })
+  }
 }

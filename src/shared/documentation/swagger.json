@@ -298,6 +298,16 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -703,6 +713,45 @@
         "responses": {
           "200": {
             "description": "rent finished"
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "list rentals",
+        "tags": ["rent"],
+        "security": [
+          {
+            "bearerAuth": ["user"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "rental list",
+            "content":{
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "properties":{
+                    "rentals": {
+                      "type": "array",
+                      "items":{
+                        "$ref": "#components/schemas/rent"
+                      }                  
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "bad request",

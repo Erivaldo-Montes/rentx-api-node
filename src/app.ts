@@ -3,6 +3,7 @@ import '@/shared/documentation/swagger.json'
 import { userRoute } from '@account/http/routes'
 import { carRoute } from '@car/http/routes'
 import fastifyJwt from '@fastify/jwt'
+import multipart from '@fastify/multipart'
 import swagger from '@fastify/swagger'
 import swaggerUI from '@fastify/swagger-ui'
 import Fastify from 'fastify'
@@ -32,6 +33,9 @@ app.register(swagger, {
 app.register(swaggerUI, {
   routePrefix: '/docs',
 })
+
+// upload register
+app.register(multipart)
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 // routes

@@ -4,6 +4,7 @@ import { authenticateUserController } from './authenticate-user-controller'
 import { createUserController } from './create-user-controller'
 import { GetUserProfileController } from './get-user-profile-controller'
 import { refreshTokenController } from './refresh-token-controller'
+import { updateAvatar } from './update-avatar-controller'
 import { updatePasswordController } from './update-password-controller'
 
 export async function userRoute(app: FastifyInstance): Promise<void> {
@@ -16,4 +17,5 @@ export async function userRoute(app: FastifyInstance): Promise<void> {
     { onRequest: [ensureAuthenticate] },
     updatePasswordController,
   )
+  app.post('/user/avatar', { onRequest: [ensureAuthenticate] }, updateAvatar)
 }

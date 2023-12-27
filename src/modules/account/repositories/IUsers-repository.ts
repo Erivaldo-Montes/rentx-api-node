@@ -15,4 +15,5 @@ export interface IUsersRepository {
 
   findById(id: string): Promise<User | null>
   updatePassword({ newPassword, user_id }: UpdatePasswordDTO): Promise<void>
+  updateAvatar(user_id: string, avatar_filename: string): Promise<void>
 }

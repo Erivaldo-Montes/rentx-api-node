@@ -480,6 +480,49 @@
         }
       }
     },
+    "/user/avatar": {
+      "post": {
+        "summary": "upload profile image ",
+        "tags": ["user"],
+        "security": [
+          {
+            "bearerAuth": ["user"]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "upload was a success"
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/update-password": {
       "post": {
         "tags": ["user"],

@@ -4,6 +4,7 @@ import fs from 'node:fs'
 import { pipeline } from 'node:stream'
 import util from 'node:util'
 import { resolve } from 'path'
+import { Readable } from 'stream'
 import { IStorageProvider } from './IStorageProvider'
 
 export class LocalStorageProvider implements IStorageProvider {
@@ -35,5 +36,19 @@ export class LocalStorageProvider implements IStorageProvider {
     }
 
     await fs.promises.unlink(filename)
+  }
+
+  async get(filename: string, folder: string): Promise<Readable | undefined> {
+    const tmp_folder = resolve(__dirname, '..', '..', '..', '..', 'tmp', folder)
+
+    try {
+      await fs.promises.stat(`${tmp_folder}/${filename}`)
+    } catch (error) {
+      console.log(error)
+      return
+    }
+
+    const file = fs.createReadStream(`${tmp_folder}/${filename}`)
+    return file
   }
 }

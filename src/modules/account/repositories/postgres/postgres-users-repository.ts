@@ -61,7 +61,10 @@ export class PostgresUsersRepository implements IUsersRepository {
     })
   }
 
-  async updateAvatar(user_id: string, avatar_filename: string): Promise<void> {
+  async updateAvatar(
+    user_id: string,
+    avatar_filename: string | null,
+  ): Promise<void> {
     await prisma.user.update({
       where: {
         id: user_id,

@@ -34,6 +34,7 @@ export class UpdateAvatarUseCase {
       avatar_file,
       'avatar',
     )
+
     await this.usersRepository.updateAvatar(user_id, avatarFilename)
   }
 }

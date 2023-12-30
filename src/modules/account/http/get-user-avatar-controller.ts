@@ -11,5 +11,5 @@ export async function getUserAvatarController(
 
   const avatar = await getUserAvatarUseCase.execute(sub)
 
-  return reply.type('image/jpeg').status(200).send(avatar)
+  return reply.status(200).send(avatar)
 }

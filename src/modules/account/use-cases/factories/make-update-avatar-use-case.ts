@@ -1,4 +1,4 @@
-import { LocalStorageProvider } from '@/shared/provider/storage/locar-storage-provider'
+import { LocalStorageProvider } from '@/shared/provider/storage/local-storage-provider'
 import { PostgresUsersRepository } from '@account/repositories/postgres/postgres-users-repository'
 import { UpdateAvatarUseCase } from '../update-avatar-use-case'
 

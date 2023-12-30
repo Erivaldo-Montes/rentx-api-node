@@ -1,4 +1,4 @@
-import { LocalStorageProvider } from '@/shared/provider/storage/locar-storage-provider'
+import { LocalStorageProvider } from '@/shared/provider/storage/local-storage-provider'
 import { PostgresCarsRepository } from '@car/repositories/postgres/postgres-car-repository'
 import { UploadCarImagesUseCase } from '../upload-car-images-use-case'
 

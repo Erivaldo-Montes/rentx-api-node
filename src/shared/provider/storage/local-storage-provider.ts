@@ -43,12 +43,11 @@ export class LocalStorageProvider implements IStorageProvider {
 
     try {
       await fs.promises.stat(`${tmp_folder}/${filename}`)
+      const file = fs.createReadStream(`${tmp_folder}/${filename}`)
+      return file
     } catch (error) {
-      console.log(error)
-      return
+      console.error(error)
+      throw error
     }
-
-    const file = fs.createReadStream(`${tmp_folder}/${filename}`)
-    return file
   }
 }

@@ -273,6 +273,61 @@
         }
       }
     },
+    "/car/images/{id}": {
+      "post": {
+        "summary": "upload many  car images",
+        "tags": ["car"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "car id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": ["admin"]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "success"
+          },
+          "400": {
+            "description": "bad request",
+            "content":{
+              "application/json": {
+                "schema": {
+                  "$ref":"#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }        
+      }
+    },
     "/category": {
       "get": {
         "summary": "list all categories",

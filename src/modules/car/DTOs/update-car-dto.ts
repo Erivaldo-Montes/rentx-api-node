@@ -5,5 +5,5 @@ export interface UpdateCarDTO {
   about: string
   daily_rate: number
   category_id: string
-  available: boolean
+  available?: boolean
 }

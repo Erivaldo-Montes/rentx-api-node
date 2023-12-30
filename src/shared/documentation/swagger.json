@@ -133,9 +133,6 @@
       "get":{
         "summary": "list car by page",
         "tags": ["car"],
-        "security": [
-          {"bearerAuth": ["user"]}
-        ],
         "parameters":[
           {
             "in": "query",
@@ -328,13 +325,35 @@
         }        
       }
     },
+    "/car/image/{filename}": {
+      "get": {
+        "summary": "get car image",
+        "tags": ["car"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "filename",
+            "required": true,
+            "description": "get picture of the car",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "picture of car",
+            "content": {
+              "image/jpeg": {}
+            }
+          }
+        }
+      } 
+    },
     "/category": {
       "get": {
         "summary": "list all categories",
         "tags": ["category"],
-        "security": [
-          {"bearerAuth": []}
-        ],
         "responses": {
           "200": {
             "description": "return a category list",

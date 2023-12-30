@@ -15,7 +15,5 @@ export async function getCarImageController(
   const getCarImageUseCase = makeGetCarImageUseCase()
   const image = await getCarImageUseCase.execute(filename)
 
-  reply.header('Content-Type', 'application/octet-stream')
-
   return reply.status(200).send(image)
 }

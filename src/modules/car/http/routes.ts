@@ -1,3 +1,4 @@
+import { ensureAuthenticate } from '@/shared/http/middleware/ensure-authenticate'
 import { verifyRole } from '@/shared/http/middleware/verify-user-role'
 import { FastifyInstance } from 'fastify'
 import { createCarController } from './create-car-controller'
@@ -5,6 +6,7 @@ import { createCategoryController } from './create-category-controller'
 import { createSpecificationController } from './create-specification-controller'
 import { deleteCarController } from './delete-car-controller'
 import { deleteCategoryController } from './delete-category-controller'
+import { getCarImageController } from './get-car-image-controller'
 import { listCarsController } from './list-car-controller'
 import { listCategoriesController } from './list-category-controller'
 import { UpdateCarController } from './update-car-controller'
@@ -43,5 +45,11 @@ export async function carRoute(app: FastifyInstance): Promise<void> {
     createSpecificationController,
   )
 
-  app.post('/car/images/:id', uploadsCarImagesController)
+  app.post(
+    '/car/images/:id',
+    { onRequest: [ensureAuthenticate] },
+    uploadsCarImagesController,
+  )
+
+  app.get('/car/image/:filename', getCarImageController)
 }

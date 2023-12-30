@@ -35,7 +35,11 @@ app.register(swaggerUI, {
 })
 
 // upload register
-app.register(multipart)
+app.register(multipart, {
+  limits: {
+    fileSize: 50000000,
+  },
+})
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 // routes

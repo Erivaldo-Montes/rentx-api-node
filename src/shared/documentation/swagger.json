@@ -521,6 +521,25 @@
             }
           }
         }
+      },
+      "get": {
+        "summary": "get profile avatar",
+        "tags": ["user"],
+        "security": [
+          {
+            "bearerAuth": ["user"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "avatar image",
+            "content": {
+              "image/jpeg": {
+
+              }
+            }
+          }
+        }
       }
     },
     "/user/update-password": {

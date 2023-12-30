@@ -19,6 +19,7 @@ model Car {
   available     Boolean
   license_plate String
   category_id   String
+  images_urls   String[]
   created_at    DateTime @default(now())
 
   Specifications Specification[]

@@ -17,4 +17,5 @@ export interface ICarsRepository {
   findById(id: string): Promise<Car | null>
   delete(id: string): Promise<void>
   list({ page }: ListCarsDTO): Promise<Car[]>
+  addImageUrl(image_url: string, id: string): Promise<void>
 }

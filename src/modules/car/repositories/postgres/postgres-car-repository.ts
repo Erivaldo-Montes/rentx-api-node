@@ -90,4 +90,17 @@ export class PostgresCarsRepository implements ICarsRepository {
       skip: (page - 1) * itemByPage,
     })
   }
+
+  async addImageUrl(image_url: string, id: string): Promise<void> {
+    await prisma.car.update({
+      where: {
+        id,
+      },
+      data: {
+        images_urls: {
+          push: image_url,
+        },
+      },
+    })
+  }
 }

@@ -16,7 +16,7 @@ export async function uploadsCarImagesController(
 
   for await (const image of images) {
     const uploadCarImagesUseCase = makeUploadsCarImages()
-    uploadCarImagesUseCase.execute({ car_id: id, image })
+    await uploadCarImagesUseCase.execute({ car_id: id, image })
   }
 
   return reply.status(201).send()

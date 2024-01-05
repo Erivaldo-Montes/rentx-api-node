@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { hash } from 'bcrypt'
+import 'dotenv/config'
 
 async function createAdmin() {
   await prisma.$connect()

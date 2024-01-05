@@ -18,12 +18,13 @@ describe('update avatar controller', () => {
     const { token } = await createAndAuthenticateUser(app)
     const path = resolve(__dirname, '..', '..', '..', 'utils', 'test')
 
-    const avatar = fs.createReadStream(`${path}/avatar-test.jpg`)
+    const avatar = fs.readFileSync(`${path}/avatar-test.jpg`)
 
     const response = await request(app.server)
       .post('/user/avatar')
       .set('Authorization', `Bearer ${token}`)
       .attach('file', avatar)
+    console.log('upload', response.body)
 
     expect(response.statusCode).toEqual(201)
   })

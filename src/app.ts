@@ -9,9 +9,14 @@ import swaggerUI from '@fastify/swagger-ui'
 import Fastify from 'fastify'
 import { ZodError } from 'zod'
 import { env } from './config/env'
+import cors from '@fastify/cors'
 
 export const app = Fastify({
   logger: true,
+})
+
+app.register(cors, {
+  origin: '*',
 })
 
 app.register(fastifyJwt, {

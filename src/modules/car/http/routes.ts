@@ -36,7 +36,11 @@ export async function carRoute(app: FastifyInstance): Promise<void> {
     createCategoryController,
   )
 
-  app.get('/category', listCategoriesController)
+  app.get(
+    '/category',
+
+    listCategoriesController,
+  )
 
   app.delete(
     '/category/:id',

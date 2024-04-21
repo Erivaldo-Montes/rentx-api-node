@@ -18,6 +18,7 @@ export class UploadCarImagesUseCase {
   async execute({ car_id, image }: IRequest): Promise<void> {
     const car = await this.carsRepository.findById(car_id)
 
+    console.log(image)
     if (!car) {
       throw new CarNotExistError()
     }

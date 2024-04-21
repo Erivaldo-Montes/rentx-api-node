@@ -1,0 +1,9 @@
+intale as dependêcias usando npm ou yarn
+
+configure as variaves de ambiente
+
+
+build o container docker: docker compose up
+
+
+faça a migration do banco de dados

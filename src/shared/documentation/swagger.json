@@ -268,6 +268,45 @@
             }
           }
         }
+      },
+      "get" : {
+        "summary": "get car Information",
+        "tags": ["car"],
+        "parameters": [
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "car id already created",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "car informations",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/car"
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "bad request",
+          "content": {
+            "application/json":{
+              "type": "object",
+              "schema": {
+                "$ref": "#components/schemas/errorResponse"
+              }
+            }
+          }
+        }
       }
     },
     "/car/images/{id}": {

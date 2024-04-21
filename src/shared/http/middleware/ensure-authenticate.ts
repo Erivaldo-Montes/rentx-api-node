@@ -10,6 +10,7 @@ export async function ensureAuthenticate(
   reply: FastifyReply,
 ) {
   try {
+    console.log(request.headers.authorization)
     const user = (await request.jwtVerify()) as jwtPayload
     request.user.role = user.role
     request.user.sub = user.sub

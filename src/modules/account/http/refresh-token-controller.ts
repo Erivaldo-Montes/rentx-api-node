@@ -11,6 +11,7 @@ export async function refreshTokenController(
 
   const { refresh_token } = refreshTokenBodySchema.parse(request.body)
 
+  console.log('refresh_token', refresh_token)
   const refreshTokenUseCase = makeRefreshTokenUseCase()
 
   const { user_id, role } = await refreshTokenUseCase.execute(refresh_token)

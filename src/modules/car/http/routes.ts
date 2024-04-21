@@ -38,7 +38,7 @@ export async function carRoute(app: FastifyInstance): Promise<void> {
 
   app.get(
     '/category',
-
+    { onRequest: [ensureAuthenticate] },
     listCategoriesController,
   )
 
@@ -61,5 +61,5 @@ export async function carRoute(app: FastifyInstance): Promise<void> {
 
   app.get('/car/image/:filename', getCarImageController)
   app.get('/car/:id', getCarController)
-  app.get('/car/list', listCarsController)
+  app.get('/car/list', { onRequest: [ensureAuthenticate] }, listCarsController)
 }

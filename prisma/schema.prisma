@@ -11,16 +11,16 @@ datasource db {
 }
 
 model Car {
-  id            String   @id @default(uuid())
-  name          String
-  brand         String
-  about         String?
-  daily_rate    Float
-  available     Boolean
-  license_plate String
-  category_id   String
-  images_urls   String[]
-  created_at    DateTime @default(now())
+  id               String   @id @default(uuid())
+  name             String
+  brand            String
+  about            String?
+  daily_rate       Float
+  available        Boolean
+  license_plate    String
+  category_id      String
+  images_filenames String[]
+  created_at       DateTime @default(now())
 
   Specifications Specification[]
   Rental         Rental[]

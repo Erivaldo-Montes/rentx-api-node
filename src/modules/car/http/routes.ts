@@ -12,6 +12,7 @@ import { listCarsController } from './list-car-controller'
 import { listCategoriesController } from './list-category-controller'
 import { UpdateCarController } from './update-car-controller'
 import { uploadsCarImagesController } from './upload-images-car-controller'
+import { removeCarImageController } from './remove-car-image-controller'
 
 export async function carRoute(app: FastifyInstance): Promise<void> {
   // admin routes
@@ -57,6 +58,12 @@ export async function carRoute(app: FastifyInstance): Promise<void> {
     '/car/images/:id',
     { onRequest: [ensureAuthenticate, verifyRole('ADMIN')] },
     uploadsCarImagesController,
+  )
+
+  app.delete(
+    '/car/image/:car_id',
+    { onRequest: [ensureAuthenticate, verifyRole('ADMIN')] },
+    removeCarImageController,
   )
 
   app.get('/car/image/:filename', getCarImageController)

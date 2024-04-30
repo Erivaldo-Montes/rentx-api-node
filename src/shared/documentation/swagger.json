@@ -290,7 +290,37 @@
               "application/json": {
                 "type": "object",
                 "schema": {
-                  "$ref": "#components/schemas/car"
+                  "allOf": [
+                    {
+                      "$ref": "#components/schemas/car"
+                    },
+                    {
+                      "properties": {
+                        "specifications": {
+                          "type": "array",
+                          "items": {
+                            "properties": {
+                              "id": {"type": "string"},
+                              "name": {"type": "string"},
+                              "description": {"type": "string"},
+                              "create_at": {"type": "string"},
+                              "car_id": {"type": "string"}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "images_urls": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -309,15 +339,15 @@
         }
       }
     },
-    "/car/images/{id}": {
+    "/car/images/{carId}": {
       "post": {
         "summary": "upload many  car images",
         "tags": ["car"],
         "parameters": [
           {
             "in": "path",
-            "name": "id",
-            "description": "car id",
+            "name": "carId",
+            "description": "Car ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -362,6 +392,57 @@
             }
           }
         }        
+      },
+      "delete": {
+        "summary": "remove an image from a car",
+        "tags": ["car"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "carId",
+            "description": "Car ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        
+        "security": [
+          {
+            "bearerAuth": ["admin"]
+          }
+        ],
+        "requestBody":{
+          "content": {
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "properties":{
+                  "filename": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "image removed"
+          },
+          "400": {
+            "description": "bad request",
+            "content":{
+              "application/json": {
+                "schema": {
+                  "$ref":"#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+        
       }
     },
     "/car/image/{filename}": {

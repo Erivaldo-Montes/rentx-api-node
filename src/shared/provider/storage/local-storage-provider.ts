@@ -27,7 +27,7 @@ export class LocalStorageProvider implements IStorageProvider {
   async delete(file: string, folder: string): Promise<void> {
     const tmp_folder = resolve(__dirname, '..', '..', '..', '..', 'tmp', folder)
     const filename = resolve(`${tmp_folder}`, file)
-
+    console.log('filename', filename)
     try {
       await fs.promises.stat(filename)
     } catch (error) {

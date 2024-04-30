@@ -41,6 +41,9 @@ export class PostgresCarsRepository implements ICarsRepository {
       where: {
         id,
       },
+      include: {
+        Specifications: true,
+      },
     })
   }
 
@@ -91,16 +94,24 @@ export class PostgresCarsRepository implements ICarsRepository {
     })
   }
 
-  async addImageUrl(image_url: string, id: string): Promise<void> {
+  async addImageFilename(image_filename: string, id: string): Promise<void> {
     await prisma.car.update({
       where: {
         id,
       },
       data: {
-        images_urls: {
-          push: image_url,
+        images_filenames: {
+          push: image_filename,
         },
       },
     })
+  }
+
+  async removeImage(image_filename: string, car_id: string): Promise<void> {
+    await prisma.$queryRaw`
+      UPDATE cars 
+      SET images_filenames = ARRAY_REMOVE(images_filenames, ${image_filename})
+      WHERE id = ${car_id} 
+    `
   }
 }

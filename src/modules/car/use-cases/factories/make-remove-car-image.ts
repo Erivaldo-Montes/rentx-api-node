@@ -1,11 +1,11 @@
 import { PostgresCarsRepository } from '@car/repositories/postgres/postgres-car-repository'
-import { DeleteCarUseCase } from '../delete-car-use-case'
+import { RemoveCarImageUseCase } from '../remove-car-image-use-case'
 import { LocalStorageProvider } from '@/shared/provider/storage/local-storage-provider'
 
-export function makeDeleteCarUseCase(): DeleteCarUseCase {
+export function removeCarImage(): RemoveCarImageUseCase {
   const carsRepository = new PostgresCarsRepository()
   const storage = new LocalStorageProvider()
-  const deleteCarUseCase = new DeleteCarUseCase(carsRepository, storage)
+  const removeCarImage = new RemoveCarImageUseCase(carsRepository, storage)
 
-  return deleteCarUseCase
+  return removeCarImage
 }

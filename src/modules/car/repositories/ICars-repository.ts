@@ -11,11 +11,12 @@ export interface ICarsRepository {
     brand,
     daily_rate,
     category_id,
-    available = true,
+    available,
   }: UpdateCarDTO) => Promise<Car>
   findByLicensePlate: (license_plate: string) => Promise<Car | null>
   findById(id: string): Promise<Car | null>
   delete(id: string): Promise<void>
   list({ page }: ListCarsDTO): Promise<Car[]>
-  addImageUrl(image_url: string, id: string): Promise<void>
+  addImageFilename(image_filename: string, id: string): Promise<void>
+  removeImage(image_filename: string, car_id: string): Promise<void>
 }

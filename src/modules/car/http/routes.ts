@@ -39,11 +39,7 @@ export async function carRoute(app: FastifyInstance): Promise<void> {
     createCategoryController,
   )
 
-  app.get(
-    '/category',
-    { onRequest: [ensureAuthenticate] },
-    listCategoriesController,
-  )
+  app.get('/category', listCategoriesController)
 
   app.get('/category/:id', getCategoryController)
 

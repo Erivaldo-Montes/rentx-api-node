@@ -11,5 +11,5 @@ export async function listRentalsByUserController(
 
   const rentals = await listRentalsByUserUseCase.execute(sub)
 
-  return reply.status(200).send({ rentals })
+  return reply.status(200).send(rentals)
 }

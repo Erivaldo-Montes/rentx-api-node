@@ -16,5 +16,5 @@ export async function listCarsController(
 
   const cars = await listCarsUseCase.execute({ page })
 
-  return reply.status(200).send({ cars })
+  return reply.status(200).send(cars)
 }

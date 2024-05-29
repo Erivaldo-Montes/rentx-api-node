@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { Prisma, Specification } from '@prisma/client'
 import type { ISpecificationsRepository } from '../ISpecifications-repository'
+import { UpdateSpecificationDTO } from '../../DTOs/update-specification-dto'
 
 export class PostgresSpecificationsRepository
   implements ISpecificationsRepository
@@ -19,7 +20,11 @@ export class PostgresSpecificationsRepository
     })
   }
 
-  async update(id: string, name: string, description: string): Promise<void> {
+  async update({
+    id,
+    name,
+    description,
+  }: UpdateSpecificationDTO): Promise<void> {
     await prisma.specification.update({
       where: {
         id,
@@ -36,6 +41,14 @@ export class PostgresSpecificationsRepository
       where: {
         car_id,
         name,
+      },
+    })
+  }
+
+  async findById(id: string): Promise<Specification | null> {
+    return await prisma.specification.findFirst({
+      where: {
+        id,
       },
     })
   }

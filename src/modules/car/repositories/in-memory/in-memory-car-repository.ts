@@ -16,6 +16,7 @@ export class InMemoryCarRepository implements ICarsRepository {
       category_id: data.category_id,
       created_at: new Date(),
       available: true,
+      images_filenames: [],
       daily_rate: data.daily_rate,
       license_plate: data.license_plate,
     }

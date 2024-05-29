@@ -125,6 +125,17 @@
 
               }
             }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -150,15 +161,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "cars": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#components/schemas/car"
-                      }
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#components/schemas/car"
                   }
+                  
                 }
               }
             }
@@ -233,6 +240,17 @@
               }
             }
           }
+        },
+        "401":{
+          "description": "unauthorized",
+          "content": {
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "$ref": "#components/schemas/errorResponse"
+              }
+            }
+          }
         }
       }, 
       "delete": {
@@ -259,6 +277,17 @@
           "400": {
             "description": "bad request",
             "content":{
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
               "application/json": {
                 "type": "object",
                 "schema": {
@@ -390,10 +419,47 @@
                 }
               }
             }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
           }
         }        
+      }
+      
+    },
+    "/car/image/{filename}": {
+      "get": {
+        "summary": "get car image",
+        "tags": ["car"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "filename",
+            "required": true,
+            "description": "get picture of the car",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "picture of car",
+            "content": {
+              "image/jpeg": {}
+            }
+          }
+        }
       },
-      "delete": {
+      "post": {
         "summary": "remove an image from a car",
         "tags": ["car"],
         "parameters": [
@@ -440,35 +506,21 @@
                 }
               }
             }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
           }
         }
         
       }
-    },
-    "/car/image/{filename}": {
-      "get": {
-        "summary": "get car image",
-        "tags": ["car"],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "filename",
-            "required": true,
-            "description": "get picture of the car",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "picture of car",
-            "content": {
-              "image/jpeg": {}
-            }
-          }
-        }
-      } 
     },
     "/category": {
       "get": {
@@ -479,15 +531,10 @@
             "description": "return a category list",
             "content":{
               "application/json":{
-                "type": "object",
-                "schema":{
-                  "properties": {
-                    "categories": {
-                      "type": "array",
-                      "items":{
-                        "$ref": "#components/schemas/category"
-                      }
-                    }
+                "schema": {
+                  "type": "array",
+                  "items":{
+                    "$ref": "#components/schemas/category"
                   }
                 }
               }
@@ -539,6 +586,17 @@
                 }
               }
             }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -574,13 +632,62 @@
                 }
               }
             }
+           
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get information from a category",
+        "tags": ["category"],
+        "parameters":[
+          {
+            "name": "id",
+            "in": "path",
+            "description": "category id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/category"
+                }
+              }
+            }
+          }
+        },
+        "400":{
+          "description": "bad request",
+          "content": {
+            "application/json":{
+              "type": "object",
+              "schema": {
+                "$ref":"#components/schemas/errorResponse"
+              }
+            }
           }
         }
       }
       
     },
-    "/car/specification/{carId}": {
-      "patch": {
+    "/car/specification/{id}": {
+      "post": {
         "summary": "add a specification on a car",
         "tags": ["specification"],
         "security": [
@@ -589,7 +696,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "carId",
+            "name": "id",
             "description": "car id",
             "schema": {
               "type": "string"
@@ -624,9 +731,80 @@
                 }
               }
             }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
           }
         }
+      },
+      "patch": {
+        "summary": "update car specification",
+        "tags": ["specification"],
+        "security": [
+          {"bearerAuth": []}
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "specification id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody":{
+          "required": true,
+          "content": {
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "properties": {
+                  "name": {"type": "string"},
+                  "description": {"type": "string"}
+                }
+              }
+            }
+          }
+        }, 
+        "responses": {
+          "20o": {
+            "description": "specification updated"
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          }
+        }
+
       }
+    
     },
     "/user": {
       "post": {
@@ -713,6 +891,17 @@
                 }
               }
             }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -730,6 +919,17 @@
             "content": {
               "image/jpeg": {
 
+              }
+            }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
               }
             }
           }
@@ -770,6 +970,17 @@
                 "type": "object",
                 "schema": {
                   "$ref":  "#components/schemas/errorResponse"
+                }
+              }
+            }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
                 }
               }
             }
@@ -886,6 +1097,7 @@
               }
             }
           },
+
           "400": {
             "description": "bad request",
             "content": {
@@ -896,8 +1108,20 @@
                 }
               }
             }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
           }
         }
+
       }
     },
     "/rent": {
@@ -943,6 +1167,17 @@
                 }
               }
             }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -974,6 +1209,17 @@
             "description": "bad request",
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
                 "schema": {
                   "$ref": "#components/schemas/errorResponse"
                 }
@@ -1013,6 +1259,17 @@
             "description": "bad request",
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/errorResponse"
+                }
+              }
+            }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "type": "object",
                 "schema": {
                   "$ref": "#components/schemas/errorResponse"
                 }

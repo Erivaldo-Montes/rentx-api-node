@@ -41,14 +41,12 @@ export class CreateCarUseCase {
       throw new CategoryNotExistError()
     }
 
-    const DAILY_RATE_IN_CENTS = daily_rate * 100
-
     const car = await this.carsRepository.create({
       name,
       about,
       brand,
       category_id,
-      daily_rate: DAILY_RATE_IN_CENTS,
+      daily_rate,
       license_plate,
     })
 

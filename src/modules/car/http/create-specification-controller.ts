@@ -12,21 +12,21 @@ export async function createSpecificationController(
   })
 
   const createSpecificationParamsSchema = z.object({
-    carId: z.string(),
+    id: z.string(),
   })
 
   const { name, description } = createSpecificationBodySchema.parse(
     request.body,
   )
 
-  const { carId } = createSpecificationParamsSchema.parse(request.params)
+  const { id } = createSpecificationParamsSchema.parse(request.params)
 
   const createCarSpecificationUseCase = makeCreateSpecificationUseCase()
 
   await createCarSpecificationUseCase.execute({
     name,
     description,
-    car_id: carId,
+    car_id: id,
   })
 
   return reply.status(201).send()

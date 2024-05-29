@@ -6,16 +6,16 @@ export async function removeCarImageController(
   request: FastifyRequest,
   reply: FastifyReply,
 ): Promise<void> {
-  const removeCarImageBodySchema = z.object({
+  const removeCarImageParamsSchema = z.object({
     filename: z.string(),
   })
 
-  const removeCarImageParamsSchema = z.object({
+  const removeCarImageBodySchema = z.object({
     car_id: z.string(),
   })
 
-  const { filename } = removeCarImageBodySchema.parse(request.body)
-  const { car_id } = removeCarImageParamsSchema.parse(request.params)
+  const { car_id } = removeCarImageBodySchema.parse(request.body)
+  const { filename } = removeCarImageParamsSchema.parse(request.params)
   const removeCarImageUseCase = removeCarImage()
 
   await removeCarImageUseCase.execute({ car_id, image_filename: filename })

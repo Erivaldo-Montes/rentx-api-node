@@ -12,6 +12,8 @@ export async function getCarImageController(
 
   const { filename } = getImageParamsSchema.parse(request.params)
 
+  console.log('=================== filename', request.params)
+
   const getCarImageUseCase = makeGetCarImageUseCase()
   const image = await getCarImageUseCase.execute(filename)
 

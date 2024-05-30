@@ -14,7 +14,12 @@ export class LocalStorageProvider implements IStorageProvider {
 
     const hash_name = randomBytes(16).toString('hex')
 
-    avatar_file.filename = `${hash_name}-${avatar_file.filename}`
+    const lastDotIndex = avatar_file.filename.lastIndexOf('.')
+    const extension = avatar_file.filename.substring(lastDotIndex)
+
+    avatar_file.filename = `${hash_name}-${
+      avatar_file.filename.substring(0, 10) + extension
+    }`
 
     await pump(
       avatar_file.file,
